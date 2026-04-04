@@ -1,30 +1,40 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const isAdminRoute = computed(() => route.path.startsWith("/admin"));
+const isUserRoute = computed(() => route.path.startsWith("/user"));
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div v-if="isAdminRoute" class="min-h-screen">
+    <router-view />
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div v-else-if="isUserRoute" class="min-h-screen">
+    <router-view />
+  </div>
+  <div v-else class="min-h-screen flex flex-col bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="text-xl font-semibold text-gray-800">PWA Bozp</a>
+        <div class="flex gap-6">
+          <router-link to="/" class="text-gray-600 hover:text-gray-900">Home</router-link>
+          <router-link to="/about" class="text-gray-600 hover:text-gray-900">About</router-link>
+          <router-link to="/contact" class="text-gray-600 hover:text-gray-900">Contact</router-link>
+          <router-link to="/login" class="text-gray-600 hover:text-gray-900">Login</router-link>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
+      <router-view />
+    </main>
+
+    <footer class="bg-gray-200 py-6 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">© 2025 PWA Bozp. All rights reserved.</div>
+    </footer>
+  </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>

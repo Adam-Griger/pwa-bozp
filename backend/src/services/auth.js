@@ -1,0 +1,21 @@
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { findUserByPID } from "../models/auth.js";
+
+export async function login(pid, password) {
+  const user = await findUserByPID(pid);
+  if (!user) {
+    throw new Error("Invalid credentials");
+  }
+
+  const passMatch = await bcrypt.compare(password, user.password);
+  if (!passMatch) {
+    throw new Error("Invalid credentials");
+  }
+
+  const token = jwt.sign({ userId: user.id, pid: user.pid, role: user.role, fullName: user.full_name }, process.env.JWT_SECRET, {
+    expiresIn: "2h",
+  });
+
+  return { token, role: user.role };
+}
