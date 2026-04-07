@@ -13,9 +13,13 @@ export async function login(pid, password) {
     throw new Error("Invalid credentials");
   }
 
-  const token = jwt.sign({ userId: user.id, pid: user.pid, role: user.role, fullName: user.full_name }, process.env.JWT_SECRET, {
-    expiresIn: "2h",
-  });
+  const token = jwt.sign(
+    { userId: user.id, pid: user.pid, role: user.role, fullName: user.full_name, companyId: user.company_id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "2h",
+    },
+  );
 
   return { token, role: user.role };
 }

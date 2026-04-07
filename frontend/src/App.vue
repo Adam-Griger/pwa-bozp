@@ -17,7 +17,7 @@ const isUserRoute = computed(() => route.path.startsWith("/user"));
   <div v-else class="min-h-screen flex flex-col bg-gray-50">
     <header class="bg-white shadow-sm">
       <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="text-xl font-semibold text-gray-800">PWA Bozp</a>
+        <a href="/" class="text-xl font-semibold text-gray-800">BOZP</a>
         <div class="flex gap-6">
           <router-link to="/" class="text-gray-600 hover:text-gray-900">Home</router-link>
           <router-link to="/about" class="text-gray-600 hover:text-gray-900">About</router-link>
@@ -32,7 +32,7 @@ const isUserRoute = computed(() => route.path.startsWith("/user"));
     </main>
 
     <footer class="bg-gray-200 py-6 mt-auto">
-      <div class="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">© 2025 PWA Bozp. All rights reserved.</div>
+      <div class="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">© 2026 BOZP. All rights reserved.</div>
     </footer>
   </div>
 </template>

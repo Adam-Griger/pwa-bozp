@@ -12,6 +12,7 @@ import AddCompanyView from "../views/admin/AddCompanyView.vue";
 import AccountsView from "../views/admin/AccountsView.vue";
 import AddAccountView from "../views/admin/AddAccountView.vue";
 import AdminHomeView from "../views/admin/AdminHomeView.vue";
+import SettingsView from "../views/admin/SettingsView.vue";
 
 import UserPanelView from "../views/UserPanelView.vue";
 import UserHomeView from "../views/user/UserHomeView.vue";
@@ -42,6 +43,7 @@ const router = createRouter({
         { path: "companies/add", component: AddCompanyView },
         { path: "accounts", component: AccountsView },
         { path: "accounts/add", component: AddAccountView },
+        { path: "settings", component: SettingsView },
       ],
     },
     {

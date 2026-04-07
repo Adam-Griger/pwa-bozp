@@ -39,7 +39,7 @@ function logout() {
         <!-- Company -->
         <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Company</p>
-          <SidebarItem to="/user/company" icon="🏢" label="My Company" />
+          <SidebarItem to="/user/company" icon="≡" label="My Company" />
         </div>
 
         <div>

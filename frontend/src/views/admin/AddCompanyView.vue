@@ -71,7 +71,7 @@ function reset() {
         </div>
         <div>
           <p class="font-semibold text-gray-900">Company created successfully</p>
-          <p class="text-sm text-gray-500">{{ result.company.name }}</p>
+          <p class="text-sm text-gray-500">{{ result.company_name }}</p>
         </div>
       </div>
 

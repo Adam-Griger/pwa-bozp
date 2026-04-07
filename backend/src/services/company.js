@@ -18,6 +18,8 @@ export async function createCompanyWithManager(companyData, managerData) {
 
     const manager = await insertUserWithClient(client, managerData.fullname, pid, managerData.email, hashed, "manager", company.id);
 
+    await client.query("UPDATE companies SET manager_id = $1 WHERE id = $2", [manager.id, company.id]);
+
     await client.query("COMMIT");
 
     return { company, manager, plainPassword: password };

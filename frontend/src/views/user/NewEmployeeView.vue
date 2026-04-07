@@ -3,7 +3,9 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import CredentialsCard from "../../components/CredentialsCard.vue";
+import { useAuth } from "../../composables/useAuth";
 
+const { getCompanyId } = useAuth();
 const router = useRouter();
 
 const form = ref({ fullname: "", email: "" });
@@ -27,8 +29,8 @@ async function handleSubmit() {
   loading.value = true;
   try {
     const { data } = await axios.post(
-      "http://localhost:3000/api/company/employees",
-      { fullname: form.value.fullname, email: form.value.email },
+      "http://localhost:3000/api/users",
+      { fullname: form.value.fullname, email: form.value.email, role: "employee", companyId: getCompanyId() },
       { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
     );
     result.value = data;

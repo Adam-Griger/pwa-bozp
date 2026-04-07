@@ -1,9 +1,20 @@
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
-import { getAllUsers } from "../models/user.js";
+import { getAllUsers, getUsersByCompany } from "../models/user.js";
 import { createUser } from "../services/user.js";
 
 const router = Router();
+
+router.get("/company", requireAuth, async (req, res) => {
+  const companyId = req.user.companyId;
+  if (!companyId) return res.status(400).json({ error: "No company associated with this account." });
+  try {
+    const employees = await getUsersByCompany(companyId);
+    res.json(employees);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 router.get("/", requireAuth, async (req, res) => {
   try {

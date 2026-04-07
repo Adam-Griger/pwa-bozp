@@ -1,9 +1,19 @@
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
-import { getAllCompanies, deleteCompany } from "../models/company.js";
+import { getAllCompanies, deleteCompany, getCompanyByUserId } from "../models/company.js";
 import { createCompanyWithManager, createCompanyOnly } from "../services/company.js";
 
 const router = Router();
+
+router.get("/my", requireAuth, async (req, res) => {
+  try {
+    const company = await getCompanyByUserId(req.user.userId);
+    if (!company) return res.status(404).json({ error: "No company found for this user." });
+    res.json(company);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 router.get("/", requireAuth, async (req, res) => {
   try {

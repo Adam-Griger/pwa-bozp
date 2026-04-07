@@ -2,7 +2,7 @@ import pool from "../db/index.js";
 
 export async function insertUser(fullname, pid, email, hashedPassword, role, companyId) {
   const result = await pool.query(
-    "INSERT INTO users (full_name, pid, password, email,  role, company_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+    "INSERT INTO users (full_name, pid, email, password,  role, company_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
     [fullname, pid, email, hashedPassword, role, companyId],
   );
   return result.rows[0];
@@ -34,6 +34,17 @@ export async function getAllUsers() {
      FROM users u
      LEFT JOIN companies c ON u.company_id = c.id
      ORDER BY u.created_at DESC`,
+  );
+  return result.rows;
+}
+
+export async function getUsersByCompany(companyId) {
+  const result = await pool.query(
+    `SELECT id, pid, full_name, email, role, created_at
+     FROM users
+     WHERE company_id = $1 AND role = 'employee'
+     ORDER BY created_at DESC`,
+    [companyId],
   );
   return result.rows;
 }
