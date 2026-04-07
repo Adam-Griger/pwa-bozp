@@ -9,10 +9,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  res.send("API beží 🚀");
-});
-
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.static("public"));
 
