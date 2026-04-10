@@ -13,6 +13,9 @@ import AccountsView from "../views/admin/AccountsView.vue";
 import AddAccountView from "../views/admin/AddAccountView.vue";
 import AdminHomeView from "../views/admin/AdminHomeView.vue";
 import SettingsView from "../views/admin/SettingsView.vue";
+import AdminCoursesView from "../views/admin/CoursesView.vue";
+import AddCourseView from "../views/admin/AddCourseView.vue";
+import EditCourseView from "../views/admin/EditCourseView.vue";
 
 import UserPanelView from "../views/UserPanelView.vue";
 import UserHomeView from "../views/user/UserHomeView.vue";
@@ -44,6 +47,9 @@ const router = createRouter({
         { path: "accounts", component: AccountsView },
         { path: "accounts/add", component: AddAccountView },
         { path: "settings", component: SettingsView },
+        { path: "elearning", component: AdminCoursesView },
+        { path: "elearning/add", component: AddCourseView },
+        { path: "elearning/edit/:id", component: EditCourseView },
       ],
     },
     {

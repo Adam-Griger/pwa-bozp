@@ -3,6 +3,8 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import DataTable from "../../components/DataTable.vue";
+import { formatDate } from "../../utils/format.js";
+import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 const accounts = ref([]);
@@ -10,28 +12,26 @@ const loading = ref(true);
 
 const columns = [
   { key: "pid", label: "PID" },
-  { key: "full_name", label: "Full Name" },
+  { key: "full_name", label: "Meno a priezvisko" },
   { key: "email", label: "Email" },
-  { key: "role", label: "Role" },
-  { key: "created_at", label: "Created" },
-  { key: "company_name", label: "Company Name" },
+  { key: "role", label: "Rola" },
+  { key: "company_name", label: "Názov spoločnosti" },
+  { key: "created", label: "Dátum vytvorenia" },
 ];
 
 async function fetchAccounts() {
   loading.value = true;
-  const token = localStorage.getItem("token");
   const { data } = await axios.get("http://localhost:3000/api/users", {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: authHeaders(),
   });
-  accounts.value = data;
+  accounts.value = data.map((a) => ({ ...a, created: formatDate(a.created_at) }));
   loading.value = false;
 }
 
 async function handleDelete(id) {
   if (!confirm("Delete this user?")) return;
-  const token = localStorage.getItem("token");
   await axios.delete(`http://localhost:3000/api/users/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: authHeaders(),
   });
   await fetchAccounts();
 }
@@ -42,9 +42,9 @@ onMounted(fetchAccounts);
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-semibold text-gray-800">Accounts</h1>
+      <h1 class="text-xl font-semibold text-gray-800">Účty</h1>
       <button @click="router.push('/admin/accounts/add')" class="px-4 py-2 bg-gray-800 text-white text-sm rounded hover:bg-gray-700">
-        + Add User
+        + Pridať používateľa
       </button>
     </div>
 

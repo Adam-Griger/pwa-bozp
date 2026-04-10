@@ -17,7 +17,7 @@ function logout() {
     <aside class="w-64 bg-gray-900 text-white flex flex-col fixed h-full">
       <!-- Logo -->
       <div class="px-6 py-5 border-b border-gray-700">
-        <span class="text-lg font-bold tracking-wide">PWA Bozp</span>
+        <span class="text-lg font-bold tracking-wide">BOZP</span>
         <span class="block text-xs text-gray-400 mt-0.5">Admin Panel</span>
       </div>
 
@@ -34,21 +34,27 @@ function logout() {
           Admin Dashboard
         </router-link>
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Companies</p>
-          <SidebarItem to="/admin/companies" icon="≡" label="View All Companies" />
-          <SidebarItem to="/admin/companies/add" icon="+" label="Add Company" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Spoločnosti</p>
+          <SidebarItem to="/admin/companies" icon="≡" label="Všetky spoločnosti" />
+          <SidebarItem to="/admin/companies/add" icon="+" label="Pridať spoločnosť" />
         </div>
 
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Accounts</p>
-          <SidebarItem to="/admin/accounts" icon="≡" label="View All Users" />
-          <SidebarItem to="/admin/accounts/add" icon="+" label="Add User" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Účty</p>
+          <SidebarItem to="/admin/accounts" icon="≡" label="Všetci používatelia" />
+          <SidebarItem to="/admin/accounts/add" icon="+" label="Pridať používateľa" />
         </div>
 
         <div>
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">e-Learning</p>
+          <SidebarItem to="/admin/elearning" icon="≡" label="Všetky testy" />
+          <SidebarItem to="/admin/elearning/add" icon="+" label="Vytvoriť test" />
+        </div>
+
+        <!-- <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">System</p>
           <SidebarItem to="/admin/settings" icon="⚙" label="Settings" />
-        </div>
+        </div> -->
       </nav>
 
       <!-- Logout at bottom -->
@@ -62,7 +68,7 @@ function logout() {
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
             />
           </svg>
-          Logout
+          Odhlásiť sa
         </button>
       </div>
     </aside>

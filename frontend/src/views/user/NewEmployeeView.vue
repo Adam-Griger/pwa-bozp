@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import CredentialsCard from "../../components/CredentialsCard.vue";
 import { useAuth } from "../../composables/useAuth";
+import { authHeaders } from "../../utils/authHeader";
 
 const { getCompanyId } = useAuth();
 const router = useRouter();
@@ -16,9 +17,9 @@ const result = ref(null);
 
 function validate() {
   errors.value = {};
-  if (!form.value.fullname.trim()) errors.value.fullname = "Required";
-  if (!form.value.email.trim()) errors.value.email = "Required";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) errors.value.email = "Invalid email";
+  if (!form.value.fullname.trim()) errors.value.fullname = "Povinný údaj";
+  if (!form.value.email.trim()) errors.value.email = "Povinný údaj";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) errors.value.email = "Neplatný email";
   return Object.keys(errors.value).length === 0;
 }
 
@@ -31,11 +32,11 @@ async function handleSubmit() {
     const { data } = await axios.post(
       "http://localhost:3000/api/users",
       { fullname: form.value.fullname, email: form.value.email, role: "employee", companyId: getCompanyId() },
-      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+      { headers: authHeaders() },
     );
     result.value = data;
   } catch (e) {
-    error.value = e.response?.data?.error || "Something went wrong.";
+    error.value = e.response?.data?.error || "Nastala chyba.";
   } finally {
     loading.value = false;
   }
@@ -51,7 +52,7 @@ function reset() {
 
 <template>
   <div class="max-w-2xl">
-    <h1 class="text-xl font-semibold text-gray-800 mb-6">Add Employee</h1>
+    <h1 class="text-xl font-semibold text-gray-800 mb-6">Pridať zamestnanca</h1>
 
     <!-- Success -->
     <div v-if="result" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
@@ -62,17 +63,17 @@ function reset() {
           </svg>
         </div>
         <div>
-          <p class="font-semibold text-gray-900">Employee added successfully</p>
+          <p class="font-semibold text-gray-900">Zamestnanec bol úspešne pridaný</p>
           <p class="text-sm text-gray-500">{{ result.user.full_name }}</p>
         </div>
       </div>
 
-      <CredentialsCard title="Employee credentials — save these now" :pid="result.user.pid" :plain-password="result.plainPassword" class="mb-6" />
+      <CredentialsCard title="Údaje pre zamestnanca" :pid="result.user.pid" :plain-password="result.plainPassword" class="mb-6" />
 
       <div class="flex gap-3">
-        <button @click="reset" class="px-4 py-2 border border-gray-300 text-sm rounded-lg hover:bg-gray-50">Add Another</button>
+        <button @click="reset" class="px-4 py-2 border border-gray-300 text-sm rounded-lg hover:bg-gray-50">Pridať nového</button>
         <button @click="router.push('/user/employees')" class="px-4 py-2 bg-gray-800 text-white text-sm rounded-lg hover:bg-gray-700">
-          View Employees
+          Zobraziť zamestnancov
         </button>
       </div>
     </div>
@@ -80,11 +81,11 @@ function reset() {
     <!-- Form -->
     <form v-else @submit.prevent="handleSubmit" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Meno a priezvisko <span class="text-red-500">*</span></label>
         <input
           v-model="form.fullname"
           type="text"
-          placeholder="Jan Novák"
+          placeholder="Ján Novák"
           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
         />
         <p v-if="errors.fullname" class="text-xs text-red-500 mt-1">{{ errors.fullname }}</p>
@@ -95,7 +96,7 @@ function reset() {
         <input
           v-model="form.email"
           type="email"
-          placeholder="jan.novak@company.cz"
+          placeholder="jan.novak@bozp.sk"
           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
         />
         <p v-if="errors.email" class="text-xs text-red-500 mt-1">{{ errors.email }}</p>
@@ -105,7 +106,7 @@ function reset() {
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        Employee will be added to your company. Password and PID auto-generated.
+        Zamestnanec bude pridaný do vašej spoločnosti. PID a heslo budú automaticky vygenerované a zobrazené po vytvorení.
       </p>
 
       <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
@@ -115,7 +116,7 @@ function reset() {
         :disabled="loading"
         class="w-full py-2.5 bg-gray-800 text-white text-sm font-medium rounded-lg hover:bg-gray-700 disabled:opacity-50"
       >
-        {{ loading ? "Adding..." : "Add Employee" }}
+        {{ loading ? "Pridávanie..." : "Pridať zamestnanca" }}
       </button>
     </form>
   </div>

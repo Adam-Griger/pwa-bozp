@@ -19,8 +19,8 @@ function logout() {
   <div class="flex min-h-screen bg-gray-100">
     <aside class="w-64 bg-gray-900 text-white flex flex-col fixed h-full">
       <div class="px-6 py-5 border-b border-gray-700">
-        <span class="text-lg font-bold tracking-wide">PWA Bozp</span>
-        <span class="block text-xs text-gray-400 mt-0.5">{{ isManager ? "Manager Panel" : "Employee Panel" }}</span>
+        <span class="text-lg font-bold tracking-wide">BOZP</span>
+        <span class="block text-xs text-gray-400 mt-0.5">{{ isManager ? "Manažér" : "Zamestnanec" }}</span>
       </div>
 
       <nav class="flex-1 px-4 py-6 space-y-6 overflow-y-auto">
@@ -38,35 +38,35 @@ function logout() {
 
         <!-- Company -->
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Company</p>
-          <SidebarItem to="/user/company" icon="≡" label="My Company" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Spoločnosť</p>
+          <SidebarItem to="/user/company" icon="≡" label="Moja spoločnosť" />
         </div>
 
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Accounts</p>
-          <SidebarItem v-if="isManager" to="/user/employees" icon="≡" label="Employees" />
-          <SidebarItem v-if="isManager" to="/user/employees/new" icon="+" label="New Employee" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Účty</p>
+          <SidebarItem v-if="isManager" to="/user/employees" icon="≡" label="Zamestnanci" />
+          <SidebarItem v-if="isManager" to="/user/employees/new" icon="+" label="Pridať zamestnanca" />
         </div>
 
         <!-- Reports -->
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Reports</p>
-          <SidebarItem to="/user/reports" icon="≡" label="Accident Reports" />
-          <SidebarItem to="/user/reports/new" icon="+" label="Submit Report" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Udalosti</p>
+          <SidebarItem to="/user/reports" icon="≡" label="Všetky udalosti" />
+          <SidebarItem to="/user/reports/new" icon="+" label="Pridať udalosť" />
         </div>
 
         <!-- eLearning -->
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">eLearning</p>
-          <SidebarItem to="/user/elearning" icon="≡" label="Courses" />
-          <SidebarItem v-if="isManager" to="/user/elearning/assign" icon="+" label="Assign Course" />
-          <SidebarItem v-if="!isManager" to="/user/elearning/my" icon="✓" label="My Courses" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">e-Learning</p>
+          <SidebarItem to="/user/elearning" icon="≡" label="Všetky testy" />
+          <SidebarItem v-if="isManager" to="/user/elearning/assign" icon="+" label="Priradiť test" />
+          <SidebarItem v-if="!isManager" to="/user/elearning/my" icon="✓" label="Moje testy" />
         </div>
 
         <!-- Account -->
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Account</p>
-          <SidebarItem to="/user/profile" icon="⚙" label="My Profile" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Nastavenia</p>
+          <SidebarItem to="/user/profile" icon="⚙" label="Môj profil" />
         </div>
       </nav>
 
@@ -80,7 +80,7 @@ function logout() {
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2v1"
             />
           </svg>
-          Logout
+          Odhlásiť sa
         </button>
       </div>
     </aside>
