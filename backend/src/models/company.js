@@ -27,7 +27,7 @@ export async function getCompanyByUserId(userId) {
   const result = await pool.query(
     `SELECT c.id, c.company_name, c.ico, c.address, c.created_at,
             m.full_name AS manager_name,
-            COUNT(u.id) FILTER (WHERE u.role = 'employee') AS employee_count
+            COUNT(u.id) FILTER (WHERE u.role = 'zamestnanec') AS employee_count
      FROM companies c
      JOIN users cu ON cu.id = $1 AND cu.company_id = c.id
      LEFT JOIN users m ON m.id = c.manager_id

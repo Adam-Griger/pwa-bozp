@@ -25,6 +25,7 @@ import ReportsView from "../views/user/ReportsView.vue";
 import ProfileView from "../views/user/ProfileView.vue";
 import NewReportView from "../views/user/NewReportView.vue";
 import NewEmployeeView from "../views/user/NewEmployeeView.vue";
+import ReportView from "../views/user/ReportView.vue";
 import CoursesView from "../views/user/CoursesView.vue";
 import AssignCourseView from "../views/user/AssignCourseView.vue";
 
@@ -64,6 +65,7 @@ const router = createRouter({
         { path: "employees/new", component: NewEmployeeView },
         { path: "reports", component: ReportsView },
         { path: "reports/new", component: NewReportView },
+        { path: "reports/:id", component: ReportView },
         { path: "elearning", component: CoursesView },
         { path: "elearning/assign", component: AssignCourseView },
         { path: "profile", component: ProfileView },

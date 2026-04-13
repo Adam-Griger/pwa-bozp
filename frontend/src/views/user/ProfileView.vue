@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
 import { useAuth } from "../../composables/useAuth.js";
+import { formatDate } from "../../utils/format.js";
+import { authHeaders } from "../../utils/authHeader.js";
 
-const { getUserId, getRole } = useAuth();
+const { getRole } = useAuth();
 
 const profile = ref({
   full_name: "",
@@ -15,40 +18,62 @@ const profile = ref({
 
 const passwordForm = ref({ current: "", new: "", confirm: "" });
 const passwordErrors = ref({});
+const passwordError = ref("");
 const loading = ref(false);
+const profileLoading = ref(true);
 const passwordSuccess = ref(false);
 
-// TODO: fetch from /api/users/me
+onMounted(async () => {
+  try {
+    const { data } = await axios.get("http://localhost:3000/api/users/me", { headers: authHeaders() });
+    profile.value = { ...data, created_at: formatDate(data.created_at) };
+  } catch {
+    // profile stays empty
+  } finally {
+    profileLoading.value = false;
+  }
+});
 
 function validatePassword() {
   passwordErrors.value = {};
-  if (!passwordForm.value.current) passwordErrors.value.current = "Required";
-  if (!passwordForm.value.new) passwordErrors.value.new = "Required";
-  else if (passwordForm.value.new.length < 6) passwordErrors.value.new = "Min 6 characters";
-  if (passwordForm.value.new !== passwordForm.value.confirm) passwordErrors.value.confirm = "Passwords do not match";
+  if (!passwordForm.value.current) passwordErrors.value.current = "Povinný údaj";
+  if (!passwordForm.value.new) passwordErrors.value.new = "Povinný údaj";
+  else if (passwordForm.value.new.length < 6) passwordErrors.value.new = "Min 6 znakov";
+  if (passwordForm.value.new !== passwordForm.value.confirm) passwordErrors.value.confirm = "Heslá sa nezhodujú";
   return Object.keys(passwordErrors.value).length === 0;
 }
 
 async function handlePasswordChange() {
   if (!validatePassword()) return;
   loading.value = true;
-  // TODO: POST to /api/users/me/password
-  loading.value = false;
-  passwordSuccess.value = true;
-  passwordForm.value = { current: "", new: "", confirm: "" };
+  passwordError.value = "";
+  passwordSuccess.value = false;
+  try {
+    await axios.post(
+      "http://localhost:3000/api/users/me/password",
+      { current: passwordForm.value.current, newPassword: passwordForm.value.new },
+      { headers: authHeaders() },
+    );
+    passwordSuccess.value = true;
+    passwordForm.value = { current: "", new: "", confirm: "" };
+  } catch (e) {
+    passwordError.value = e.response?.data?.error || "Niečo sa pokazilo.";
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 
 <template>
   <div class="max-w-2xl space-y-6">
-    <h1 class="text-xl font-semibold text-gray-800">My Profile</h1>
+    <h1 class="text-xl font-semibold text-gray-800">Môj profil</h1>
 
     <!-- Profile info card -->
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-      <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-5">Account Information</h2>
+      <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-5">Informácie o účte</h2>
       <div class="space-y-4">
         <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Full Name</span>
+          <span class="text-sm text-gray-500">Meno a priezvisko</span>
           <span class="text-sm font-medium text-gray-900">{{ profile.full_name || "-" }}</span>
         </div>
         <div class="flex justify-between py-3 border-b border-gray-100">
@@ -60,15 +85,15 @@ async function handlePasswordChange() {
           <code class="text-sm font-mono text-gray-900">{{ profile.pid || "-" }}</code>
         </div>
         <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Role</span>
+          <span class="text-sm text-gray-500">Rola</span>
           <span class="text-sm font-medium text-gray-900 capitalize">{{ profile.role || "-" }}</span>
         </div>
         <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Company</span>
+          <span class="text-sm text-gray-500">Spoločnosť</span>
           <span class="text-sm font-medium text-gray-900">{{ profile.company_name || "-" }}</span>
         </div>
         <div class="flex justify-between py-3">
-          <span class="text-sm text-gray-500">Member since</span>
+          <span class="text-sm text-gray-500">Členom od</span>
           <span class="text-sm text-gray-900">{{ profile.created_at || "-" }}</span>
         </div>
       </div>
@@ -76,7 +101,7 @@ async function handlePasswordChange() {
 
     <!-- Change password card -->
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-      <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-5">Change Password</h2>
+      <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-5">Zmena hesla</h2>
 
       <div
         v-if="passwordSuccess"
@@ -85,12 +110,12 @@ async function handlePasswordChange() {
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>
-        Password changed successfully.
+        Heslo bolo úspešne zmenené.
       </div>
 
       <form @submit.prevent="handlePasswordChange" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Aktuálne heslo</label>
           <input
             v-model="passwordForm.current"
             type="password"
@@ -99,7 +124,7 @@ async function handlePasswordChange() {
           <p v-if="passwordErrors.current" class="text-xs text-red-500 mt-1">{{ passwordErrors.current }}</p>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nové heslo</label>
           <input
             v-model="passwordForm.new"
             type="password"
@@ -108,7 +133,7 @@ async function handlePasswordChange() {
           <p v-if="passwordErrors.new" class="text-xs text-red-500 mt-1">{{ passwordErrors.new }}</p>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Potvrdiť nové heslo</label>
           <input
             v-model="passwordForm.confirm"
             type="password"
@@ -116,12 +141,13 @@ async function handlePasswordChange() {
           />
           <p v-if="passwordErrors.confirm" class="text-xs text-red-500 mt-1">{{ passwordErrors.confirm }}</p>
         </div>
+        <p v-if="passwordError" class="text-sm text-red-600">{{ passwordError }}</p>
         <button
           type="submit"
           :disabled="loading"
           class="w-full py-2.5 bg-gray-800 text-white text-sm font-medium rounded-lg hover:bg-gray-700 disabled:opacity-50"
         >
-          {{ loading ? "Saving..." : "Update Password" }}
+          {{ loading ? "Ukladám..." : "Zmeniť heslo" }}
         </button>
       </form>
     </div>

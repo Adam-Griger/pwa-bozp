@@ -3,7 +3,14 @@ export function useAuth() {
     const token = localStorage.getItem("token");
     if (!token) return null;
     try {
-      return JSON.parse(atob(token.split(".")[1]));
+      const base64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+      const json = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
+          .join(""),
+      );
+      return JSON.parse(json);
     } catch {
       return null;
     }

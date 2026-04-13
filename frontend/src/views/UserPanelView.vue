@@ -8,7 +8,7 @@ const router = useRouter();
 const { getRole, logout: authLogout } = useAuth();
 
 const role = computed(() => getRole());
-const isManager = computed(() => role.value === "manager");
+const isManager = computed(() => role.value === "manažér");
 
 function logout() {
   authLogout(router);
@@ -44,15 +44,15 @@ function logout() {
 
         <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Účty</p>
-          <SidebarItem v-if="isManager" to="/user/employees" icon="≡" label="Zamestnanci" />
+          <SidebarItem v-if="isManager" to="/user/employees" icon="≡" label="Všetci zamestnanci" />
           <SidebarItem v-if="isManager" to="/user/employees/new" icon="+" label="Pridať zamestnanca" />
         </div>
 
         <!-- Reports -->
         <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Udalosti</p>
-          <SidebarItem to="/user/reports" icon="≡" label="Všetky udalosti" />
-          <SidebarItem to="/user/reports/new" icon="+" label="Pridať udalosť" />
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Incidenty</p>
+          <SidebarItem to="/user/reports" icon="≡" label="Všetky incidenty" />
+          <SidebarItem to="/user/reports/new" icon="+" label="Pridať incident" />
         </div>
 
         <!-- eLearning -->

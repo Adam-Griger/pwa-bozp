@@ -14,9 +14,9 @@ export async function createCompanyWithManager(companyData, managerData) {
 
     const password = generatePassword();
     const hashed = await bcrypt.hash(password, 10);
-    const pid = generatePID(managerData.fullname, managerData.email, "manager");
+    const pid = generatePID(managerData.fullname, managerData.email, "manažér");
 
-    const manager = await insertUserWithClient(client, managerData.fullname, pid, managerData.email, hashed, "manager", company.id);
+    const manager = await insertUserWithClient(client, managerData.fullname, pid, managerData.email, hashed, "manažér", company.id);
 
     await client.query("UPDATE companies SET manager_id = $1 WHERE id = $2", [manager.id, company.id]);
 

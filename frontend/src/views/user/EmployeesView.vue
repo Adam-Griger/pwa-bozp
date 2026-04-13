@@ -18,7 +18,8 @@ const columns = [
   { key: "joined", label: "Registrácia" },
 ];
 
-onMounted(async () => {
+async function fetchEmployees() {
+  loading.value = true;
   try {
     const { data } = await axios.get("http://localhost:3000/api/users/company", {
       headers: authHeaders(),
@@ -29,7 +30,19 @@ onMounted(async () => {
   } finally {
     loading.value = false;
   }
-});
+}
+
+async function handleDelete(id) {
+  if (!confirm("Odstrániť tohto zamestnanca?")) return;
+  try {
+    await axios.delete(`http://localhost:3000/api/users/${id}`, { headers: authHeaders() });
+    await fetchEmployees();
+  } catch {
+    error.value = "Nepodarilo sa odstrániť zamestnanca.";
+  }
+}
+
+onMounted(fetchEmployees);
 </script>
 
 <template>
@@ -41,6 +54,6 @@ onMounted(async () => {
       </button>
     </div>
     <p v-if="error" class="text-sm text-red-600 mb-4">{{ error }}</p>
-    <DataTable :columns="columns" :rows="employees" :loading="loading" @delete="() => {}" />
+    <DataTable :columns="columns" :rows="employees" :loading="loading" :show-edit="false" @delete="handleDelete" />
   </div>
 </template>

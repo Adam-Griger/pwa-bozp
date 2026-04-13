@@ -31,7 +31,7 @@ async function handleSubmit() {
   try {
     const { data } = await axios.post(
       "http://localhost:3000/api/users",
-      { fullname: form.value.fullname, email: form.value.email, role: "employee", companyId: getCompanyId() },
+      { fullname: form.value.fullname, email: form.value.email, role: "zamestnanec", companyId: getCompanyId() },
       { headers: authHeaders() },
     );
     result.value = data;

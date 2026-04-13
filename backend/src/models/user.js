@@ -42,11 +42,27 @@ export async function getUsersByCompany(companyId) {
   const result = await pool.query(
     `SELECT id, pid, full_name, email, role, created_at
      FROM users
-     WHERE company_id = $1 AND role = 'employee'
+     WHERE company_id = $1 AND role = 'zamestnanec'
      ORDER BY created_at DESC`,
     [companyId],
   );
   return result.rows;
+}
+
+export async function getUserMe(id) {
+  const result = await pool.query(
+    `SELECT u.id, u.pid, u.full_name, u.email, u.role, u.password, u.created_at,
+            c.company_name
+     FROM users u
+     LEFT JOIN companies c ON c.id = u.company_id
+     WHERE u.id = $1`,
+    [id],
+  );
+  return result.rows[0] || null;
+}
+
+export async function updateUserPassword(id, hashedPassword) {
+  await pool.query("UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, id]);
 }
 
 export async function insertUserWithClient(client, fullname, pid, email, hashedPassword, role, companyId) {

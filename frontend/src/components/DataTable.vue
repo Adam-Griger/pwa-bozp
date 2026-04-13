@@ -3,6 +3,10 @@ defineProps({
   columns: Array,
   rows: Array,
   loading: Boolean,
+  editLabel: { type: String, default: "Upraviť" },
+  deleteLabel: { type: String, default: "Vymazať" },
+  showEdit: { type: Boolean, default: true },
+  showDelete: { type: Boolean, default: true },
 });
 defineEmits(["delete", "edit"]);
 </script>
@@ -25,8 +29,8 @@ defineEmits(["delete", "edit"]);
             {{ row[col.key] ?? "-" }}
           </td>
           <td class="px-6 py-4 text-right space-x-3">
-            <button @click="$emit('edit', row.id)" class="text-blue-500 hover:text-blue-700 text-sm">Upraviť</button>
-            <button @click="$emit('delete', row.id)" class="text-red-500 hover:text-red-700 text-sm">Vymazať</button>
+            <button v-if="showEdit" @click="$emit('edit', row.id)" class="text-blue-500 hover:text-blue-700 text-sm">{{ editLabel }}</button>
+            <button v-if="showDelete" @click="$emit('delete', row.id)" class="text-red-500 hover:text-red-700 text-sm">{{ deleteLabel }}</button>
           </td>
         </tr>
         <tr v-if="rows.length === 0">

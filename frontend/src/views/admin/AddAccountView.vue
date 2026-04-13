@@ -7,7 +7,7 @@ import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 
-const form = ref({ fullname: "", email: "", role: "employee", companyId: "" });
+const form = ref({ fullname: "", email: "", role: "zamestnanec", companyId: "" });
 const companies = ref([]);
 const loading = ref(false);
 const error = ref("");
@@ -64,7 +64,7 @@ async function handleSubmit() {
 }
 
 function reset() {
-  form.value = { fullname: "", email: "", role: "employee", companyId: "" };
+  form.value = { fullname: "", email: "", role: "zamestnanec", companyId: "" };
   result.value = null;
   error.value = "";
   errors.value = {};
@@ -130,7 +130,7 @@ function reset() {
         <label class="block text-sm font-medium text-gray-700 mb-3">Rola <span class="text-red-500">*</span></label>
         <div class="flex gap-3">
           <label
-            v-for="option in ['admin', 'manager', 'employee']"
+            v-for="option in ['admin', 'manažér', 'zamestnanec']"
             :key="option"
             :class="form.role === option ? 'border-gray-800 bg-gray-800 text-white' : 'border-gray-300 text-gray-600 hover:border-gray-400'"
             class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors capitalize"

@@ -63,3 +63,50 @@ export async function deleteQuestionsByTestId(client, testId) {
 export async function deleteTest(id) {
   await pool.query("DELETE FROM tests WHERE id = $1", [id]);
 }
+
+export async function getAssignedTestsForEmployee(employeeId) {
+  const result = await pool.query(
+    `SELECT at.id, at.status, at.deadline, at.assigned_at, at.score, at.max_score,
+            t.name, t.description
+     FROM assigned_tests at
+     JOIN tests t ON t.id = at.test_id
+     WHERE at.employee_id = $1
+     ORDER BY at.assigned_at DESC`,
+    [employeeId],
+  );
+  return result.rows;
+}
+
+export async function getAssignedTestsForCompany(companyId) {
+  const result = await pool.query(
+    `SELECT at.id, at.status, at.deadline, at.assigned_at, at.score, at.max_score,
+            t.name, t.description,
+            emp.full_name AS employee_name,
+            mgr.full_name AS assigned_by_name
+     FROM assigned_tests at
+     JOIN tests t ON t.id = at.test_id
+     JOIN users emp ON emp.id = at.employee_id
+     JOIN users mgr ON mgr.id = at.assigned_by
+     WHERE emp.company_id = $1
+     ORDER BY at.assigned_at DESC`,
+    [companyId],
+  );
+  return result.rows;
+}
+
+export async function insertAssignedTest(testId, employeeId, assignedBy, deadline) {
+  const result = await pool.query(
+    `INSERT INTO assigned_tests (test_id, employee_id, assigned_by, deadline, status)
+     VALUES ($1, $2, $3, $4, 'Otvorený') RETURNING *`,
+    [testId, employeeId, assignedBy, deadline || null],
+  );
+  return result.rows[0];
+}
+
+export async function updateAssignedTestDeadline(id, deadline) {
+  await pool.query("UPDATE assigned_tests SET deadline = $1 WHERE id = $2", [deadline || null, id]);
+}
+
+export async function deleteAssignedTest(id) {
+  await pool.query("DELETE FROM assigned_tests WHERE id = $1", [id]);
+}
