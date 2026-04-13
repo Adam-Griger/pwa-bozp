@@ -12,7 +12,6 @@ import AddCompanyView from "../views/admin/AddCompanyView.vue";
 import AccountsView from "../views/admin/AccountsView.vue";
 import AddAccountView from "../views/admin/AddAccountView.vue";
 import AdminHomeView from "../views/admin/AdminHomeView.vue";
-import SettingsView from "../views/admin/SettingsView.vue";
 import AdminCoursesView from "../views/admin/CoursesView.vue";
 import AddCourseView from "../views/admin/AddCourseView.vue";
 import EditCourseView from "../views/admin/EditCourseView.vue";
