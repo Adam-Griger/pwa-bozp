@@ -1,9 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import CredentialsCard from "../../components/CredentialsCard.vue";
-import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 
@@ -31,11 +30,9 @@ async function handleSubmit() {
   if (!validate()) return;
   loading.value = true;
   try {
-    const { data } = await axios.post(
-      "http://localhost:3000/api/companies",
-      { company: company.value, manager: withManager.value ? manager.value : null },
-      { headers: authHeaders() },
-    );
+    const { data } = await api.post("/api/companies", {
+      company: company.value, manager: withManager.value ? manager.value : null,
+    });
     result.value = data;
   } catch (e) {
     error.value = e.response?.data?.error || "Nastala chyba.";

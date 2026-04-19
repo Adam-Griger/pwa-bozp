@@ -49,6 +49,26 @@ export async function updateReportAssignee(id, assignedTo) {
   await pool.query("UPDATE reports SET assigned_to = $1, status = 'Priradený', updated_at = NOW() WHERE id = $2", [assignedTo, id]);
 }
 
+export async function setReportDone(id, resolutionNote) {
+  await pool.query(
+    "UPDATE reports SET status = 'Vyriešený', resolution_note = $1, updated_at = NOW() WHERE id = $2",
+    [resolutionNote || null, id],
+  );
+}
+
+export async function getReportsAssignedToUser(userId) {
+  const result = await pool.query(
+    `SELECT r.id, r.title, r.location, r.severity, r.status, r.occurred_at,
+            reporter.full_name AS reported_by_name
+     FROM reports r
+     JOIN users reporter ON reporter.id = r.reported_by
+     WHERE r.assigned_to = $1
+     ORDER BY r.created_at DESC`,
+    [userId],
+  );
+  return result.rows;
+}
+
 export async function deleteReport(id) {
   await pool.query("DELETE FROM reports WHERE id = $1", [id]);
 }

@@ -25,8 +25,11 @@ import ProfileView from "../views/user/ProfileView.vue";
 import NewReportView from "../views/user/NewReportView.vue";
 import NewEmployeeView from "../views/user/NewEmployeeView.vue";
 import ReportView from "../views/user/ReportView.vue";
+import MyReportsView from "../views/user/MyReportsView.vue";
 import CoursesView from "../views/user/CoursesView.vue";
 import AssignCourseView from "../views/user/AssignCourseView.vue";
+import MyCoursesView from "../views/user/MyCoursesView.vue";
+import TakeTestView from "../views/user/TakeTestView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -46,7 +49,6 @@ const router = createRouter({
         { path: "companies/add", component: AddCompanyView },
         { path: "accounts", component: AccountsView },
         { path: "accounts/add", component: AddAccountView },
-        { path: "settings", component: SettingsView },
         { path: "elearning", component: AdminCoursesView },
         { path: "elearning/add", component: AddCourseView },
         { path: "elearning/edit/:id", component: EditCourseView },
@@ -64,9 +66,12 @@ const router = createRouter({
         { path: "employees/new", component: NewEmployeeView },
         { path: "reports", component: ReportsView },
         { path: "reports/new", component: NewReportView },
+        { path: "reports/my", component: MyReportsView },
         { path: "reports/:id", component: ReportView },
         { path: "elearning", component: CoursesView },
         { path: "elearning/assign", component: AssignCourseView },
+        { path: "elearning/my", component: MyCoursesView },
+        { path: "elearning/take/:id", component: TakeTestView },
         { path: "profile", component: ProfileView },
       ],
     },

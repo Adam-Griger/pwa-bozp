@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import DataTable from "../../components/DataTable.vue";
 import { useAuth } from "../../composables/useAuth.js";
 import { formatDate } from "../../utils/format.js";
@@ -18,10 +18,6 @@ const error = ref("");
 const editingId = ref(null);
 const editDeadline = ref("");
 const saving = ref(false);
-
-function authHeaders() {
-  return { Authorization: `Bearer ${localStorage.getItem("token")}` };
-}
 
 const columns = computed(() => {
   const base = [
@@ -45,7 +41,7 @@ function mapRow(c) {
 async function fetchCourses() {
   loading.value = true;
   try {
-    const { data } = await axios.get("http://localhost:3000/api/tests/assigned", { headers: authHeaders() });
+    const { data } = await api.get("/api/tests/assigned");
     courses.value = data.map(mapRow);
   } catch {
     error.value = "Nepodarilo sa načítať kurzy.";
@@ -68,11 +64,7 @@ function closeEdit() {
 async function handleSaveDeadline() {
   saving.value = true;
   try {
-    await axios.patch(
-      `http://localhost:3000/api/tests/assigned/${editingId.value}`,
-      { deadline: editDeadline.value || null },
-      { headers: authHeaders() },
-    );
+    await api.patch(`/api/tests/assigned/${editingId.value}`, { deadline: editDeadline.value || null });
     closeEdit();
     await fetchCourses();
   } catch {
@@ -85,7 +77,7 @@ async function handleSaveDeadline() {
 async function handleDelete(id) {
   if (!confirm("Odstrániť priradenie kurzu?")) return;
   try {
-    await axios.delete(`http://localhost:3000/api/tests/assigned/${id}`, { headers: authHeaders() });
+    await api.delete(`/api/tests/assigned/${id}`);
     await fetchCourses();
   } catch {
     error.value = "Nepodarilo sa odstrániť priradenie.";
@@ -98,7 +90,7 @@ onMounted(fetchCourses);
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-semibold text-gray-800">eLearning</h1>
+      <h1 class="text-xl font-semibold text-gray-800">Pridané testy</h1>
       <button
         v-if="isManager"
         @click="router.push('/user/elearning/assign')"

@@ -1,9 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import api from "../../api/index.js";
 import { useAuth } from "../../composables/useAuth.js";
 import { formatDate } from "../../utils/format.js";
-import { authHeaders } from "../../utils/authHeader.js";
 
 const { getRole } = useAuth();
 
@@ -25,7 +24,7 @@ const passwordSuccess = ref(false);
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get("http://localhost:3000/api/users/me", { headers: authHeaders() });
+    const { data } = await api.get("/api/users/me");
     profile.value = { ...data, created_at: formatDate(data.created_at) };
   } catch {
     // profile stays empty
@@ -49,11 +48,7 @@ async function handlePasswordChange() {
   passwordError.value = "";
   passwordSuccess.value = false;
   try {
-    await axios.post(
-      "http://localhost:3000/api/users/me/password",
-      { current: passwordForm.value.current, newPassword: passwordForm.value.new },
-      { headers: authHeaders() },
-    );
+    await api.post("/api/users/me/password", { current: passwordForm.value.current, newPassword: passwordForm.value.new });
     passwordSuccess.value = true;
     passwordForm.value = { current: "", new: "", confirm: "" };
   } catch (e) {

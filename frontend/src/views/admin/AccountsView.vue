@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import DataTable from "../../components/DataTable.vue";
 import { formatDate } from "../../utils/format.js";
-import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 const accounts = ref([]);
@@ -21,18 +20,14 @@ const columns = [
 
 async function fetchAccounts() {
   loading.value = true;
-  const { data } = await axios.get("http://localhost:3000/api/users", {
-    headers: authHeaders(),
-  });
+  const { data } = await api.get("/api/users");
   accounts.value = data.map((a) => ({ ...a, created: formatDate(a.created_at) }));
   loading.value = false;
 }
 
 async function handleDelete(id) {
   if (!confirm("Delete this user?")) return;
-  await axios.delete(`http://localhost:3000/api/users/${id}`, {
-    headers: authHeaders(),
-  });
+  await api.delete(`/api/users/${id}`);
   await fetchAccounts();
 }
 

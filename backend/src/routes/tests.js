@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
-import { getAllTests, getTestById, deleteTest, getAssignedTestsForEmployee, getAssignedTestsForCompany, insertAssignedTest, updateAssignedTestDeadline, deleteAssignedTest } from "../models/tests.js";
+import { getAllTests, getTestById, deleteTest, getAssignedTestsForEmployee, getAssignedTestsForCompany, insertAssignedTest, updateAssignedTestDeadline, deleteAssignedTest, getAssignedTestForTaking, evaluateAndSubmitTest } from "../models/tests.js";
 import { createTest, updateTest } from "../services/tests.js";
 
 const router = Router();
@@ -62,6 +62,28 @@ router.patch("/assigned/:id", requireAuth, async (req, res) => {
   try {
     await updateAssignedTestDeadline(req.params.id, deadline);
     res.json({ message: "Deadline updated." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/assigned/:id/take", requireAuth, async (req, res) => {
+  try {
+    const test = await getAssignedTestForTaking(req.params.id, req.user.userId);
+    if (!test) return res.status(404).json({ error: "Test not found or not assigned to you." });
+    res.json(test);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/assigned/:id/submit", requireAuth, async (req, res) => {
+  const { answers } = req.body;
+  if (!answers || typeof answers !== "object") return res.status(400).json({ error: "answers is required." });
+  try {
+    const result = await evaluateAndSubmitTest(req.params.id, req.user.userId, answers);
+    if (!result) return res.status(404).json({ error: "Assignment not found." });
+    res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

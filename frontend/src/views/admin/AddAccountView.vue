@@ -1,9 +1,8 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import CredentialsCard from "../../components/CredentialsCard.vue";
-import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 
@@ -15,9 +14,7 @@ const errors = ref({});
 const result = ref(null);
 
 async function fetchCompanies() {
-  const { data } = await axios.get("http://localhost:3000/api/companies", {
-    headers: authHeaders(),
-  });
+  const { data } = await api.get("/api/companies");
   companies.value = data;
 }
 
@@ -45,16 +42,12 @@ async function handleSubmit() {
 
   loading.value = true;
   try {
-    const { data } = await axios.post(
-      "http://localhost:3000/api/users",
-      {
-        fullname: form.value.fullname,
-        email: form.value.email,
-        role: form.value.role,
-        companyId: form.value.role !== "admin" ? form.value.companyId : null,
-      },
-      { headers: authHeaders() },
-    );
+    const { data } = await api.post("/api/users", {
+      fullname: form.value.fullname,
+      email: form.value.email,
+      role: form.value.role,
+      companyId: form.value.role !== "admin" ? form.value.companyId : null,
+    });
     result.value = data;
   } catch (e) {
     error.value = e.response?.data?.error || "Nastala chyba.";

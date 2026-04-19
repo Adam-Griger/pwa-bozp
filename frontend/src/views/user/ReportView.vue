@@ -1,13 +1,13 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import { useAuth } from "../../composables/useAuth.js";
 import { formatDate } from "../../utils/format.js";
 
 const router = useRouter();
 const route = useRoute();
-const { getRole } = useAuth();
+const { getRole, getUserId } = useAuth();
 
 const id = route.params.id;
 const report = ref(null);
@@ -17,8 +17,17 @@ const error = ref("");
 const assignedTo = ref(null);
 const assigning = ref(false);
 const assignSuccess = ref(false);
+const marking = ref(false);
+const resolutionNote = ref("");
 
 const isManager = computed(() => getRole() === "manažér");
+
+const canMarkDone = computed(() => {
+  if (!report.value) return false;
+  if (report.value.status === "Vyriešený") return false;
+  if (isManager.value) return true;
+  return report.value.assigned_to === getUserId();
+});
 
 const severityClass = {
   Nízka: "bg-green-100 text-green-700",
@@ -28,13 +37,22 @@ const severityClass = {
 };
 
 const statusClass = {
-  Otvorený: "bg-blue-100 text-blue-700",
-  "V riešení": "bg-yellow-100 text-yellow-700",
+  Vytvorený: "bg-blue-100 text-blue-700",
+  Priradený: "bg-yellow-100 text-yellow-700",
   Vyriešený: "bg-green-100 text-green-700",
 };
 
-function authHeaders() {
-  return { Authorization: `Bearer ${localStorage.getItem("token")}` };
+async function handleMarkDone() {
+  marking.value = true;
+  try {
+    await api.patch(`/api/reports/${id}/done`, { resolutionNote: resolutionNote.value });
+    report.value.status = "Vyriešený";
+    report.value.resolution_note = resolutionNote.value || null;
+  } catch {
+    error.value = "Nepodarilo sa označiť záznam ako vyriešený.";
+  } finally {
+    marking.value = false;
+  }
 }
 
 async function handleAssign() {
@@ -42,7 +60,7 @@ async function handleAssign() {
   assigning.value = true;
   assignSuccess.value = false;
   try {
-    await axios.patch(`http://localhost:3000/api/reports/${id}/assign`, { assignedTo: assignedTo.value }, { headers: authHeaders() });
+    await api.patch(`/api/reports/${id}/assign`, { assignedTo: assignedTo.value });
     const emp = employees.value.find((e) => e.id === Number(assignedTo.value));
     report.value.assigned_to_name = emp?.full_name || "";
     report.value.status = "Priradený";
@@ -56,12 +74,12 @@ async function handleAssign() {
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get(`http://localhost:3000/api/reports/${id}`, { headers: authHeaders() });
+    const { data } = await api.get(`/api/reports/${id}`);
     report.value = data;
     assignedTo.value = data.assigned_to || null;
 
     if (isManager.value) {
-      const empRes = await axios.get("http://localhost:3000/api/users/company", { headers: authHeaders() });
+      const empRes = await api.get("/api/users/company");
       employees.value = empRes.data;
     }
   } catch {
@@ -114,9 +132,13 @@ onMounted(async () => {
             <span class="text-sm text-gray-500">Zodpovedný zamestnanec</span>
             <span class="text-sm font-medium text-gray-900">{{ report.assigned_to_name || "-" }}</span>
           </div>
-          <div v-if="report.description" class="py-3">
+          <div v-if="report.description" class="py-3 border-b border-gray-100">
             <p class="text-sm text-gray-500 mb-1">Popis</p>
             <p class="text-sm text-gray-900 whitespace-pre-line">{{ report.description }}</p>
+          </div>
+          <div v-if="report.resolution_note" class="py-3">
+            <p class="text-sm text-gray-500 mb-1">Poznámka k riešeniu</p>
+            <p class="text-sm text-gray-900 whitespace-pre-line">{{ report.resolution_note }}</p>
           </div>
         </div>
       </div>
@@ -128,6 +150,26 @@ onMounted(async () => {
           <a v-for="(url, i) in report.images" :key="i" :href="url" target="_blank">
             <img :src="url" class="w-full h-40 object-cover rounded-lg border border-gray-200 hover:opacity-90 transition-opacity" />
           </a>
+        </div>
+      </div>
+
+      <!-- Mark as done -->
+      <div v-if="canMarkDone" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <p class="text-sm font-semibold text-gray-700 mb-1">Označiť ako vyriešený <span class="text-red-500">*</span></p>
+        <textarea
+          v-model="resolutionNote"
+          placeholder="Zadajte popis riešenia..."
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none mb-4"
+        />
+        <div class="flex justify-end">
+          <button
+            @click="handleMarkDone"
+            :disabled="marking || !resolutionNote.trim()"
+            class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-500 disabled:opacity-50"
+          >
+            {{ marking ? "Ukladám..." : "Označiť ako vyriešený" }}
+          </button>
         </div>
       </div>
 

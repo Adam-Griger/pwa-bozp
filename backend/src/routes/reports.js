@@ -1,10 +1,19 @@
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { upload } from "../middleware/upload.js";
-import { getAllReportsByCompany, getReportById, updateReportAssignee, deleteReport } from "../models/reports.js";
+import { getAllReportsByCompany, getReportById, updateReportAssignee, setReportDone, deleteReport, getReportsAssignedToUser } from "../models/reports.js";
 import { createReport } from "../services/reports.js";
 
 const router = Router();
+
+router.get("/my", requireAuth, async (req, res) => {
+  try {
+    const reports = await getReportsAssignedToUser(req.user.userId);
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 router.get("/", requireAuth, async (req, res) => {
   const companyId = req.user.companyId;
@@ -50,6 +59,17 @@ router.patch("/:id/assign", requireAuth, async (req, res) => {
   try {
     await updateReportAssignee(req.params.id, assignedTo);
     res.json({ message: "Assignee updated." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.patch("/:id/done", requireAuth, async (req, res) => {
+  const { resolutionNote } = req.body;
+  if (!resolutionNote?.trim()) return res.status(400).json({ error: "Poznámka k riešeniu je povinná." });
+  try {
+    await setReportDone(req.params.id, resolutionNote);
+    res.json({ message: "Report marked as done." });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

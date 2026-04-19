@@ -42,10 +42,10 @@ function logout() {
           <SidebarItem to="/user/company" icon="≡" label="Moja spoločnosť" />
         </div>
 
-        <div>
+        <div v-if="isManager">
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Účty</p>
-          <SidebarItem v-if="isManager" to="/user/employees" icon="≡" label="Všetci zamestnanci" />
-          <SidebarItem v-if="isManager" to="/user/employees/new" icon="+" label="Pridať zamestnanca" />
+          <SidebarItem to="/user/employees" icon="≡" label="Všetci zamestnanci" />
+          <SidebarItem to="/user/employees/new" icon="+" label="Pridať zamestnanca" />
         </div>
 
         <!-- Reports -->
@@ -53,12 +53,13 @@ function logout() {
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Incidenty</p>
           <SidebarItem to="/user/reports" icon="≡" label="Všetky incidenty" />
           <SidebarItem to="/user/reports/new" icon="+" label="Pridať incident" />
+          <SidebarItem v-if="!isManager" to="/user/reports/my" icon="✓" label="Moje incidenty" />
         </div>
 
         <!-- eLearning -->
         <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">e-Learning</p>
-          <SidebarItem to="/user/elearning" icon="≡" label="Všetky testy" />
+          <SidebarItem v-if="isManager" to="/user/elearning" icon="≡" label="Všetky testy" />
           <SidebarItem v-if="isManager" to="/user/elearning/assign" icon="+" label="Priradiť test" />
           <SidebarItem v-if="!isManager" to="/user/elearning/my" icon="✓" label="Moje testy" />
         </div>

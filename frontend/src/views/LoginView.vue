@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
+import api from "../api/index.js";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -19,7 +19,7 @@ async function handleSubmit() {
   loading.value = true;
 
   try {
-    const response = await axios.post("http://localhost:3000/api/auth/login", { pid: pid.value, password: password.value });
+    const response = await api.post("/api/auth/login", { pid: pid.value, password: password.value });
 
     const { token, role } = response.data;
 

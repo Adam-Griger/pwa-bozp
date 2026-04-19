@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import DataTable from "../../components/DataTable.vue";
 import { formatDate } from "../../utils/format.js";
-import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 const employees = ref([]);
@@ -21,9 +20,7 @@ const columns = [
 async function fetchEmployees() {
   loading.value = true;
   try {
-    const { data } = await axios.get("http://localhost:3000/api/users/company", {
-      headers: authHeaders(),
-    });
+    const { data } = await api.get("/api/users/company");
     employees.value = data.map((e) => ({ ...e, joined: formatDate(e.created_at) }));
   } catch (err) {
     error.value = "Nepodarilo sa načítať zamestnancov.";
@@ -35,7 +32,7 @@ async function fetchEmployees() {
 async function handleDelete(id) {
   if (!confirm("Odstrániť tohto zamestnanca?")) return;
   try {
-    await axios.delete(`http://localhost:3000/api/users/${id}`, { headers: authHeaders() });
+    await api.delete(`/api/users/${id}`);
     await fetchEmployees();
   } catch {
     error.value = "Nepodarilo sa odstrániť zamestnanca.";
@@ -54,6 +51,6 @@ onMounted(fetchEmployees);
       </button>
     </div>
     <p v-if="error" class="text-sm text-red-600 mb-4">{{ error }}</p>
-    <DataTable :columns="columns" :rows="employees" :loading="loading" :show-edit="false" @delete="handleDelete" />
+    <DataTable :columns="columns" :rows="employees" :loading="loading" :show-edit="false" :delete-label="'Odstrániť'" @delete="handleDelete" />
   </div>
 </template>

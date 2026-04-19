@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -58,13 +58,8 @@ async function handleSubmit() {
   error.value = "";
   if (!validate()) return;
   saving.value = true;
-  const token = localStorage.getItem("token");
   try {
-    await axios.put(
-      `http://localhost:3000/api/tests/${id}`,
-      { name: form.value.name, description: form.value.description, questions: questions.value },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
+    await api.put(`/api/tests/${id}`, { name: form.value.name, description: form.value.description, questions: questions.value });
     success.value = true;
   } catch (e) {
     error.value = e.response?.data?.error || "Something went wrong.";
@@ -74,11 +69,8 @@ async function handleSubmit() {
 }
 
 onMounted(async () => {
-  const token = localStorage.getItem("token");
   try {
-    const { data } = await axios.get(`http://localhost:3000/api/tests/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const { data } = await api.get(`/api/tests/${id}`);
     form.value = { name: data.name, description: data.description };
     questions.value = data.questions.map((q) => ({
       question_text: q.question_text,

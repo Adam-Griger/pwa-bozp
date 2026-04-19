@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 
 const router = useRouter();
 
@@ -13,10 +13,6 @@ const error = ref("");
 const loading = ref(true);
 const submitting = ref(false);
 const success = ref(false);
-
-function authHeaders() {
-  return { Authorization: `Bearer ${localStorage.getItem("token")}` };
-}
 
 function validate() {
   errors.value = {};
@@ -30,11 +26,9 @@ async function handleSubmit() {
   submitting.value = true;
   error.value = "";
   try {
-    await axios.post(
-      "http://localhost:3000/api/tests/assign",
-      { testId: form.value.testId, employeeId: form.value.employeeId, deadline: form.value.deadline || null },
-      { headers: authHeaders() },
-    );
+    await api.post("/api/tests/assign", {
+      testId: form.value.testId, employeeId: form.value.employeeId, deadline: form.value.deadline || null,
+    });
     success.value = true;
   } catch (e) {
     error.value = e.response?.data?.error || "Niečo sa pokazilo.";
@@ -52,8 +46,8 @@ function reset() {
 onMounted(async () => {
   try {
     const [testsRes, empRes] = await Promise.all([
-      axios.get("http://localhost:3000/api/tests", { headers: authHeaders() }),
-      axios.get("http://localhost:3000/api/users/company", { headers: authHeaders() }),
+      api.get("/api/tests"),
+      api.get("/api/users/company"),
     ]);
     tests.value = testsRes.data;
     employees.value = empRes.data;

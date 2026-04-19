@@ -110,3 +110,65 @@ export async function updateAssignedTestDeadline(id, deadline) {
 export async function deleteAssignedTest(id) {
   await pool.query("DELETE FROM assigned_tests WHERE id = $1", [id]);
 }
+
+export async function getAssignedTestForTaking(assignedTestId, employeeId) {
+  const at = await pool.query(
+    "SELECT id, status, test_id FROM assigned_tests WHERE id = $1 AND employee_id = $2",
+    [assignedTestId, employeeId],
+  );
+  if (!at.rows[0]) return null;
+
+  const test = await pool.query("SELECT id, name, description FROM tests WHERE id = $1", [at.rows[0].test_id]);
+  if (!test.rows[0]) return null;
+
+  const questions = await pool.query(
+    "SELECT id, question_text FROM questions WHERE test_id = $1 ORDER BY id ASC",
+    [at.rows[0].test_id],
+  );
+
+  for (const q of questions.rows) {
+    const answers = await pool.query(
+      "SELECT id, answer_text FROM answers WHERE question_id = $1 ORDER BY id ASC",
+      [q.id],
+    );
+    q.answers = answers.rows;
+  }
+
+  return {
+    assignedTestId: at.rows[0].id,
+    status: at.rows[0].status,
+    ...test.rows[0],
+    questions: questions.rows,
+  };
+}
+
+export async function evaluateAndSubmitTest(assignedTestId, employeeId, selectedAnswers) {
+  const at = await pool.query(
+    "SELECT test_id FROM assigned_tests WHERE id = $1 AND employee_id = $2",
+    [assignedTestId, employeeId],
+  );
+  if (!at.rows[0]) return null;
+
+  const questions = await pool.query("SELECT id FROM questions WHERE test_id = $1", [at.rows[0].test_id]);
+
+  let score = 0;
+  const maxScore = questions.rows.length;
+
+  for (const q of questions.rows) {
+    const selectedAnswerId = selectedAnswers[String(q.id)];
+    if (selectedAnswerId) {
+      const answer = await pool.query(
+        "SELECT is_correct FROM answers WHERE id = $1 AND question_id = $2",
+        [selectedAnswerId, q.id],
+      );
+      if (answer.rows[0]?.is_correct) score++;
+    }
+  }
+
+  await pool.query(
+    "UPDATE assigned_tests SET score = $1, max_score = $2, submitted_at = NOW(), status = 'Dokončený' WHERE id = $3",
+    [score, maxScore, assignedTestId],
+  );
+
+  return { score, maxScore };
+}

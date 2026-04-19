@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import DataTable from "../../components/DataTable.vue";
 import { formatDate } from "../../utils/format.js";
-import { authHeaders } from "../../utils/authHeader";
 
 const router = useRouter();
 const companies = ref([]);
@@ -19,18 +18,14 @@ const columns = [
 
 async function fetchCompanies() {
   loading.value = true;
-  const { data } = await axios.get("http://localhost:3000/api/companies", {
-    headers: authHeaders(),
-  });
+  const { data } = await api.get("/api/companies");
   companies.value = data.map((c) => ({ ...c, created: formatDate(c.created_at) }));
   loading.value = false;
 }
 
 async function handleDelete(id) {
   if (!confirm("Delete this company?")) return;
-  await axios.delete(`http://localhost:3000/api/companies/${id}`, {
-    headers: authHeaders(),
-  });
+  await api.delete(`/api/companies/${id}`);
   await fetchCompanies();
 }
 

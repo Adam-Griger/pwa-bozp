@@ -1,10 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import api from "../../api/index.js";
 import CredentialsCard from "../../components/CredentialsCard.vue";
 import { useAuth } from "../../composables/useAuth";
-import { authHeaders } from "../../utils/authHeader";
 
 const { getCompanyId } = useAuth();
 const router = useRouter();
@@ -29,11 +28,9 @@ async function handleSubmit() {
 
   loading.value = true;
   try {
-    const { data } = await axios.post(
-      "http://localhost:3000/api/users",
-      { fullname: form.value.fullname, email: form.value.email, role: "zamestnanec", companyId: getCompanyId() },
-      { headers: authHeaders() },
-    );
+    const { data } = await api.post("/api/users", {
+      fullname: form.value.fullname, email: form.value.email, role: "zamestnanec", companyId: getCompanyId(),
+    });
     result.value = data;
   } catch (e) {
     error.value = e.response?.data?.error || "Nastala chyba.";

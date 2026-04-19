@@ -13,7 +13,7 @@ defineEmits(["delete", "edit"]);
 
 <template>
   <div class="bg-white rounded-lg shadow overflow-hidden">
-    <div v-if="loading" class="p-8 text-center text-gray-400">Loading...</div>
+    <div v-if="loading" class="p-8 text-center text-gray-400">Načítavam...</div>
     <table v-else class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>

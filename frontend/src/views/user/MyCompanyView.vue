@@ -1,8 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import api from "../../api/index.js";
 import { formatDate } from "../../utils/format.js";
-import { authHeaders } from "../../utils/authHeader";
 
 const company = ref(null);
 const loading = ref(true);
@@ -10,9 +9,7 @@ const error = ref(null);
 
 onMounted(async () => {
   try {
-    const res = await axios.get("http://localhost:3000/api/companies/my", {
-      headers: authHeaders(),
-    });
+    const res = await api.get("/api/companies/my");
     company.value = res.data;
   } catch (err) {
     error.value = "Nepodarilo sa načítať informácie o spoločnosti.";

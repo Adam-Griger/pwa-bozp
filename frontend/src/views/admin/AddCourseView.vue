@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
-import { authHeaders } from "../../utils/authHeader";
+import api from "../../api/index.js";
 
 const router = useRouter();
 
@@ -62,11 +61,7 @@ async function handleSubmit() {
   if (!validate()) return;
   loading.value = true;
   try {
-    await axios.post(
-      "http://localhost:3000/api/tests",
-      { name: form.value.name, description: form.value.description, questions: questions.value },
-      { headers: authHeaders() },
-    );
+    await api.post("/api/tests", { name: form.value.name, description: form.value.description, questions: questions.value });
     success.value = true;
   } catch (e) {
     error.value = e.response?.data?.error || "Nastala chyba.";
