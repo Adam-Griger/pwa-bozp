@@ -93,7 +93,7 @@ async function handleSubmit() {
     <h1 class="text-xl font-semibold text-gray-800 mb-6">Pridať záznam o incidente</h1>
 
     <div v-if="success" class="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-6">
-      <div class="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+      <div class="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center shrink-0">
         <svg class="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>

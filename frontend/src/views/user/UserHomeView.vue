@@ -40,7 +40,7 @@ const greeting = computed(() => {
         to="/user/company"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -62,7 +62,7 @@ const greeting = computed(() => {
         to="/user/employees"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -83,7 +83,7 @@ const greeting = computed(() => {
         to="/user/employees/new"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
@@ -100,7 +100,7 @@ const greeting = computed(() => {
         to="/user/reports"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -120,7 +120,7 @@ const greeting = computed(() => {
         to="/user/reports/new"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -141,7 +141,7 @@ const greeting = computed(() => {
         to="/user/reports/my"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -163,7 +163,7 @@ const greeting = computed(() => {
         to="/user/elearning"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -184,7 +184,7 @@ const greeting = computed(() => {
         to="/user/elearning/assign"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
@@ -200,7 +200,7 @@ const greeting = computed(() => {
         to="/user/elearning/my"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -221,7 +221,7 @@ const greeting = computed(() => {
         to="/user/elearning/resources"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -242,7 +242,7 @@ const greeting = computed(() => {
         to="/user/profile"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"

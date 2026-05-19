@@ -59,7 +59,12 @@ async function handleSubmit() {
   if (!validate()) return;
   saving.value = true;
   try {
-    await api.put(`/api/tests/${id}`, { name: form.value.name, description: form.value.description, targetGroup: form.value.targetGroup, questions: questions.value });
+    await api.put(`/api/tests/${id}`, {
+      name: form.value.name,
+      description: form.value.description,
+      targetGroup: form.value.targetGroup,
+      questions: questions.value,
+    });
     success.value = true;
   } catch (e) {
     error.value = e.response?.data?.error || "Something went wrong.";
@@ -134,9 +139,14 @@ onMounted(async () => {
           <label class="block text-sm font-medium text-gray-700 mb-3">Určený pre <span class="text-red-500">*</span></label>
           <div class="flex gap-3">
             <label
-              v-for="opt in [{ value: 'employee', label: 'Zamestnanec' }, { value: 'student', label: 'Študent' }]"
+              v-for="opt in [
+                { value: 'employee', label: 'Zamestnanec' },
+                { value: 'student', label: 'Študent' },
+              ]"
               :key="opt.value"
-              :class="form.targetGroup === opt.value ? 'border-gray-800 bg-gray-800 text-white' : 'border-gray-300 text-gray-600 hover:border-gray-400'"
+              :class="
+                form.targetGroup === opt.value ? 'border-gray-800 bg-gray-800 text-white' : 'border-gray-300 text-gray-600 hover:border-gray-400'
+              "
               class="flex-1 flex items-center justify-center px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors"
             >
               <input type="radio" v-model="form.targetGroup" :value="opt.value" class="hidden" />
@@ -175,7 +185,7 @@ onMounted(async () => {
               :name="`correct_${qi}`"
               :checked="a.is_correct"
               @change="setCorrect(qi, ai)"
-              class="accent-gray-800 mt-0.5 flex-shrink-0"
+              class="accent-gray-800 mt-0.5 shrink-0"
             />
             <input
               v-model="a.answer_text"
