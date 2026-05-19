@@ -1,13 +1,13 @@
 import pool from "../db/index.js";
 import { insertTest, insertQuestion, insertAnswer, updateTestInfo, deleteQuestionsByTestId } from "../models/tests.js";
 
-export async function updateTest(id, name, description, questions) {
+export async function updateTest(id, name, description, targetGroup, questions) {
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
-    await updateTestInfo(client, id, name, description);
+    await updateTestInfo(client, id, name, description, targetGroup);
     await deleteQuestionsByTestId(client, id);
 
     for (const q of questions) {
@@ -26,13 +26,13 @@ export async function updateTest(id, name, description, questions) {
   }
 }
 
-export async function createTest(name, description, questions) {
+export async function createTest(name, description, targetGroup, questions) {
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
-    const test = await insertTest(client, name, description);
+    const test = await insertTest(client, name, description, targetGroup);
 
     for (const q of questions) {
       const question = await insertQuestion(client, test.id, q.question_text);

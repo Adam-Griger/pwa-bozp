@@ -26,14 +26,12 @@
         text-align: center;
         margin-bottom: 60px;
       }
-
       header h1 {
         font-size: 2.5rem;
         font-weight: 700;
         color: #38bdf8;
         letter-spacing: -0.5px;
       }
-
       header p {
         margin-top: 12px;
         color: #94a3b8;
@@ -69,6 +67,7 @@
         letter-spacing: 1.5px;
         color: #64748b;
         margin-bottom: 4px;
+        margin-top: 12px;
         padding-left: 4px;
       }
 
@@ -82,7 +81,6 @@
         gap: 16px;
         transition: border-color 0.2s;
       }
-
       .endpoint:hover {
         border-color: #38bdf8;
       }
@@ -93,12 +91,11 @@
         letter-spacing: 1px;
         padding: 3px 10px;
         border-radius: 5px;
-        min-width: 52px;
+        min-width: 58px;
         text-align: center;
         margin-top: 2px;
         flex-shrink: 0;
       }
-
       .method.post {
         background: #422006;
         color: #fb923c;
@@ -114,6 +111,11 @@
         color: #a5b4fc;
         border: 1px solid #3730a3;
       }
+      .method.patch {
+        background: #1c1917;
+        color: #fcd34d;
+        border: 1px solid #78350f;
+      }
       .method.delete {
         background: #450a0a;
         color: #f87171;
@@ -123,13 +125,11 @@
       .endpoint-info {
         flex: 1;
       }
-
       .endpoint-path {
         font-family: "Cascadia Code", "Fira Code", monospace;
         font-size: 0.95rem;
         color: #f1f5f9;
       }
-
       .endpoint-desc {
         margin-top: 4px;
         font-size: 0.85rem;
@@ -147,68 +147,264 @@
   <body>
     <header>
       <h1>BOZP API</h1>
-      <p>Backend REST API — running on port 3000</p>
+      <p>Backend REST API — Ústav umelej inteligencie FEI TUKE</p>
       <span class="badge">v1.0.0 &nbsp;·&nbsp; Express.js</span>
     </header>
 
     <div class="docs">
+      <!-- AUTH -->
       <div class="section-title">Authentication</div>
-
       <div class="endpoint">
         <span class="method post">POST</span>
         <div class="endpoint-info">
           <div class="endpoint-path">/api/auth/login</div>
-          <div class="endpoint-desc">Authenticate a user and receive a JWT token.</div>
+          <div class="endpoint-desc">Prihlásenie používateľa — vráti JWT token a rolu.</div>
         </div>
       </div>
 
-      <div class="endpoint">
-        <span class="method post">POST</span>
-        <div class="endpoint-info">
-          <div class="endpoint-path">/api/auth/register</div>
-          <div class="endpoint-desc">Register a new user account.</div>
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <span class="method post">POST</span>
-        <div class="endpoint-info">
-          <div class="endpoint-path">/api/auth/logout</div>
-          <div class="endpoint-desc">Invalidate the current session token.</div>
-        </div>
-      </div>
-
-      <div class="section-title" style="margin-top: 12px">Users</div>
-
+      <!-- USERS -->
+      <div class="section-title">Users — /api/users</div>
       <div class="endpoint">
         <span class="method get">GET</span>
         <div class="endpoint-info">
           <div class="endpoint-path">/api/users</div>
-          <div class="endpoint-desc">Retrieve a list of all users. Requires admin role.</div>
+          <div class="endpoint-desc">Zoznam všetkých používateľov (admin).</div>
         </div>
       </div>
-
       <div class="endpoint">
-        <span class="method get">GET</span>
+        <span class="method post">POST</span>
         <div class="endpoint-info">
-          <div class="endpoint-path">/api/users/:id</div>
-          <div class="endpoint-desc">Get details of a specific user by ID.</div>
+          <div class="endpoint-path">/api/users</div>
+          <div class="endpoint-desc">Vytvorenie nového používateľa.</div>
         </div>
       </div>
-
-      <div class="endpoint">
-        <span class="method put">PUT</span>
-        <div class="endpoint-info">
-          <div class="endpoint-path">/api/users/:id</div>
-          <div class="endpoint-desc">Update user profile information.</div>
-        </div>
-      </div>
-
       <div class="endpoint">
         <span class="method delete">DELETE</span>
         <div class="endpoint-info">
           <div class="endpoint-path">/api/users/:id</div>
-          <div class="endpoint-desc">Delete a user account. Requires admin role.</div>
+          <div class="endpoint-desc">Odstránenie používateľa.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/users/me</div>
+          <div class="endpoint-desc">Profil aktuálne prihláseného používateľa.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/users/me/password</div>
+          <div class="endpoint-desc">Zmena hesla prihláseného používateľa.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/users/company</div>
+          <div class="endpoint-desc">Zoznam zamestnancov a študentov spoločnosti prihláseného manažéra.</div>
+        </div>
+      </div>
+
+      <!-- COMPANIES -->
+      <div class="section-title">Companies — /api/companies</div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/companies</div>
+          <div class="endpoint-desc">Zoznam všetkých spoločností (admin).</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/companies</div>
+          <div class="endpoint-desc">Vytvorenie novej spoločnosti (voliteľne aj s manažérom).</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/companies/:id</div>
+          <div class="endpoint-desc">Odstránenie spoločnosti.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/companies/my</div>
+          <div class="endpoint-desc">Detail spoločnosti prihláseného používateľa.</div>
+        </div>
+      </div>
+
+      <!-- REPORTS -->
+      <div class="section-title">Reports — /api/reports</div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports</div>
+          <div class="endpoint-desc">Všetky incidenty spoločnosti prihláseného používateľa.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports</div>
+          <div class="endpoint-desc">Vytvorenie nového záznamu o incidente (multipart, max 10 obrázkov).</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports/my</div>
+          <div class="endpoint-desc">Incidenty priradené prihlásenému používateľovi.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports/:id</div>
+          <div class="endpoint-desc">Detail konkrétneho incidentu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method patch">PATCH</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports/:id/assign</div>
+          <div class="endpoint-desc">Priradenie zodpovedného zamestnanca k incidentu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method patch">PATCH</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports/:id/done</div>
+          <div class="endpoint-desc">Označenie incidentu ako vyriešeného (povinná poznámka).</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/reports/:id</div>
+          <div class="endpoint-desc">Odstránenie záznamu o incidente.</div>
+        </div>
+      </div>
+
+      <!-- TESTS -->
+      <div class="section-title">e-Learning — /api/tests</div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests</div>
+          <div class="endpoint-desc">Zoznam všetkých testov.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests</div>
+          <div class="endpoint-desc">Vytvorenie nového testu s otázkami a odpoveďami.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/:id</div>
+          <div class="endpoint-desc">Detail konkrétneho testu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method put">PUT</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/:id</div>
+          <div class="endpoint-desc">Aktualizácia testu, otázok a odpovedí.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/:id</div>
+          <div class="endpoint-desc">Odstránenie testu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/assigned</div>
+          <div class="endpoint-desc">Priradené testy — manažér vidí všetky v spoločnosti, ostatní len svoje.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/assign</div>
+          <div class="endpoint-desc">Priradenie testu používateľovi s termínom.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method patch">PATCH</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/assigned/:id</div>
+          <div class="endpoint-desc">Zmena termínu (deadline) prideleného testu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/assigned/:id</div>
+          <div class="endpoint-desc">Zrušenie pridelenia testu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/assigned/:id/take</div>
+          <div class="endpoint-desc">Načítanie otázok a odpovedí prihláseného testu (bez správnych odpovedí).</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/tests/assigned/:id/submit</div>
+          <div class="endpoint-desc">Odoslanie a vyhodnotenie odpovedí — uloží skóre a zmení stav.</div>
+        </div>
+      </div>
+
+      <!-- RESOURCES -->
+      <div class="section-title">Learning Resources — /api/resources</div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/resources</div>
+          <div class="endpoint-desc">Zoznam všetkých výukových materiálov.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/resources</div>
+          <div class="endpoint-desc">Pridanie nového výukového materiálu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/resources/:id</div>
+          <div class="endpoint-desc">Detail konkrétneho výukového materiálu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method put">PUT</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/resources/:id</div>
+          <div class="endpoint-desc">Aktualizácia výukového materiálu.</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <div class="endpoint-info">
+          <div class="endpoint-path">/api/resources/:id</div>
+          <div class="endpoint-desc">Odstránenie výukového materiálu.</div>
         </div>
       </div>
     </div>

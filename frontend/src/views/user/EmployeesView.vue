@@ -14,6 +14,7 @@ const columns = [
   { key: "pid", label: "PID" },
   { key: "full_name", label: "Meno a priezvisko" },
   { key: "email", label: "Email" },
+  { key: "role", label: "Rola" },
   { key: "joined", label: "Registrácia" },
 ];
 

@@ -28,10 +28,14 @@ export function useAuth() {
     return getTokenPayload()?.companyId ?? null;
   }
 
+  function getFullName() {
+    return getTokenPayload()?.fullName ?? null;
+  }
+
   function logout(router) {
     localStorage.removeItem("token");
     router.push("/login");
   }
 
-  return { getRole, getUserId, getCompanyId, logout };
+  return { getRole, getUserId, getCompanyId, getFullName, logout };
 }

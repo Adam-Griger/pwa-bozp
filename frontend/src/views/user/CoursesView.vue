@@ -26,7 +26,7 @@ const columns = computed(() => {
     { key: "deadline_fmt", label: "Deadline" },
     { key: "score_fmt", label: "Skóre" },
   ];
-  if (isManager.value) base.splice(1, 0, { key: "employee_name", label: "Zamestnanec" });
+  if (isManager.value) base.splice(1, 0, { key: "user_display", label: "Používateľ" });
   return base;
 });
 
@@ -35,6 +35,7 @@ function mapRow(c) {
     ...c,
     deadline_fmt: c.deadline ? formatDate(c.deadline) : "—",
     score_fmt: c.score !== null && c.max_score ? `${c.score} / ${c.max_score}` : "-",
+    user_display: c.employee_name ? `${c.employee_name} (${c.employee_role})` : null,
   };
 }
 
@@ -90,7 +91,7 @@ onMounted(fetchCourses);
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-semibold text-gray-800">Pridané testy</h1>
+      <h1 class="text-xl font-semibold text-gray-800">Priradané testy</h1>
       <button
         v-if="isManager"
         @click="router.push('/user/elearning/assign')"

@@ -42,7 +42,7 @@ export async function getUsersByCompany(companyId) {
   const result = await pool.query(
     `SELECT id, pid, full_name, email, role, created_at
      FROM users
-     WHERE company_id = $1 AND role = 'zamestnanec'
+     WHERE company_id = $1 AND role IN ('zamestnanec', 'študent')
      ORDER BY created_at DESC`,
     [companyId],
   );

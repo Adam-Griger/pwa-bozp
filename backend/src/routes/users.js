@@ -39,8 +39,8 @@ router.get("/company", requireAuth, async (req, res) => {
   const companyId = req.user.companyId;
   if (!companyId) return res.status(400).json({ error: "No company associated with this account." });
   try {
-    const employees = await getUsersByCompany(companyId);
-    res.json(employees);
+    const users = await getUsersByCompany(companyId);
+    res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -19,15 +19,12 @@ const isUserRoute = computed(() => route.path.startsWith("/user"));
       <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="text-xl font-semibold text-gray-800">BOZP</a>
         <div class="flex gap-6">
-          <router-link to="/" class="text-gray-600 hover:text-gray-900">Domov</router-link>
-          <router-link to="/about" class="text-gray-600 hover:text-gray-900">O nás</router-link>
-          <router-link to="/contact" class="text-gray-600 hover:text-gray-900">Kontakt</router-link>
           <router-link to="/login" class="text-gray-600 hover:text-gray-900">Prihlásenie</router-link>
         </div>
       </nav>
     </header>
 
-    <main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
       <router-view />
     </main>
 

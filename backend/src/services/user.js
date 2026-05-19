@@ -4,8 +4,9 @@ import { insertUser } from "../models/user.js";
 
 const roleLetters = {
   admin: "A",
-  "manažér": "M",
-  "zamestnanec": "Z",
+  manažér: "M",
+  zamestnanec: "Z",
+  študent: "S",
 };
 
 function generatePID(fullname, email, role) {

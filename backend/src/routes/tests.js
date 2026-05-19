@@ -42,15 +42,16 @@ router.get("/", requireAuth, async (req, res) => {
 });
 
 router.post("/", requireAuth, async (req, res) => {
-  const { name, description, questions } = req.body;
+  const { name, description, targetGroup, questions } = req.body;
 
   if (!name) return res.status(400).json({ error: "Name is required." });
   if (!description) return res.status(400).json({ error: "Description is required." });
+  if (!targetGroup) return res.status(400).json({ error: "targetGroup is required." });
   if (!Array.isArray(questions) || questions.length === 0)
     return res.status(400).json({ error: "At least one question is required." });
 
   try {
-    const test = await createTest(name, description, questions);
+    const test = await createTest(name, description, targetGroup, questions);
     res.status(201).json(test);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -109,15 +110,16 @@ router.get("/:id", requireAuth, async (req, res) => {
 });
 
 router.put("/:id", requireAuth, async (req, res) => {
-  const { name, description, questions } = req.body;
+  const { name, description, targetGroup, questions } = req.body;
 
   if (!name) return res.status(400).json({ error: "Name is required." });
   if (!description) return res.status(400).json({ error: "Description is required." });
+  if (!targetGroup) return res.status(400).json({ error: "targetGroup is required." });
   if (!Array.isArray(questions) || questions.length === 0)
     return res.status(400).json({ error: "At least one question is required." });
 
   try {
-    await updateTest(req.params.id, name, description, questions);
+    await updateTest(req.params.id, name, description, targetGroup, questions);
     res.json({ message: "Test updated." });
   } catch (err) {
     res.status(500).json({ error: err.message });

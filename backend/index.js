@@ -5,6 +5,7 @@ import companiesRoutes from "./src/routes/companies.js";
 import usersRoutes from "./src/routes/users.js";
 import testsRoutes from "./src/routes/tests.js";
 import reportsRoutes from "./src/routes/reports.js";
+import resourcesRoutes from "./src/routes/resources.js";
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/api/companies", companiesRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/tests", testsRoutes);
 app.use("/api/reports", reportsRoutes);
+app.use("/api/resources", resourcesRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);

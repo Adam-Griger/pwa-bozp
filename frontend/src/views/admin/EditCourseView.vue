@@ -7,7 +7,7 @@ const router = useRouter();
 const route = useRoute();
 const id = route.params.id;
 
-const form = ref({ name: "", description: "" });
+const form = ref({ name: "", description: "", targetGroup: "employee" });
 const questions = ref([]);
 const loading = ref(true);
 const saving = ref(false);
@@ -59,7 +59,7 @@ async function handleSubmit() {
   if (!validate()) return;
   saving.value = true;
   try {
-    await api.put(`/api/tests/${id}`, { name: form.value.name, description: form.value.description, questions: questions.value });
+    await api.put(`/api/tests/${id}`, { name: form.value.name, description: form.value.description, targetGroup: form.value.targetGroup, questions: questions.value });
     success.value = true;
   } catch (e) {
     error.value = e.response?.data?.error || "Something went wrong.";
@@ -71,7 +71,7 @@ async function handleSubmit() {
 onMounted(async () => {
   try {
     const { data } = await api.get(`/api/tests/${id}`);
-    form.value = { name: data.name, description: data.description };
+    form.value = { name: data.name, description: data.description, targetGroup: data.target_group || "employee" };
     questions.value = data.questions.map((q) => ({
       question_text: q.question_text,
       answers: q.answers.map((a) => ({ answer_text: a.answer_text, is_correct: a.is_correct })),
@@ -129,6 +129,20 @@ onMounted(async () => {
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none"
           />
           <p v-if="errors.description" class="text-xs text-red-500 mt-1">{{ errors.description }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-3">Určený pre <span class="text-red-500">*</span></label>
+          <div class="flex gap-3">
+            <label
+              v-for="opt in [{ value: 'employee', label: 'Zamestnanec' }, { value: 'student', label: 'Študent' }]"
+              :key="opt.value"
+              :class="form.targetGroup === opt.value ? 'border-gray-800 bg-gray-800 text-white' : 'border-gray-300 text-gray-600 hover:border-gray-400'"
+              class="flex-1 flex items-center justify-center px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors"
+            >
+              <input type="radio" v-model="form.targetGroup" :value="opt.value" class="hidden" />
+              {{ opt.label }}
+            </label>
+          </div>
         </div>
       </div>
 

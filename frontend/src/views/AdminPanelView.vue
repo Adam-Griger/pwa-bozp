@@ -18,43 +18,30 @@ function logout() {
       <!-- Logo -->
       <div class="px-6 py-5 border-b border-gray-700">
         <span class="text-lg font-bold tracking-wide">BOZP</span>
-        <span class="block text-xs text-gray-400 mt-0.5">Admin Panel</span>
+        <span class="block text-xs text-gray-400 mt-0.5">Admin</span>
       </div>
 
       <!-- Nav -->
       <nav class="flex-1 px-4 py-6 space-y-6 overflow-y-auto">
-        <router-link
-          to="/admin"
-          class="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
-          exact-active-class="bg-gray-700 text-white"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 5v6h4v-6m-4 0H9m4 0h2" />
-          </svg>
-          Admin Dashboard
-        </router-link>
         <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Spoločnosti</p>
-          <SidebarItem to="/admin/companies" icon="≡" label="Všetky spoločnosti" />
+          <SidebarItem to="/admin/companies" icon="≡" label="Spoločnosti" />
           <SidebarItem to="/admin/companies/add" icon="+" label="Pridať spoločnosť" />
         </div>
 
         <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Účty</p>
-          <SidebarItem to="/admin/accounts" icon="≡" label="Všetci používatelia" />
+          <SidebarItem to="/admin/accounts" icon="≡" label="Používatelia" />
           <SidebarItem to="/admin/accounts/add" icon="+" label="Pridať používateľa" />
         </div>
 
         <div>
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">e-Learning</p>
-          <SidebarItem to="/admin/elearning" icon="≡" label="Všetky testy" />
+          <SidebarItem to="/admin/elearning" icon="≡" label="Testy" />
           <SidebarItem to="/admin/elearning/add" icon="+" label="Vytvoriť test" />
+          <SidebarItem to="/admin/resources" icon="≡" label="Učebné materiály" />
+          <SidebarItem to="/admin/resources/add" icon="+" label="Pridať učebný materiál" />
         </div>
-
-        <!-- <div>
-          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">System</p>
-          <SidebarItem to="/admin/settings" icon="⚙" label="Settings" />
-        </div> -->
       </nav>
 
       <!-- Logout at bottom -->

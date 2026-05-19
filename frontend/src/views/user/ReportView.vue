@@ -80,7 +80,7 @@ onMounted(async () => {
 
     if (isManager.value) {
       const empRes = await api.get("/api/users/company");
-      employees.value = empRes.data;
+      employees.value = empRes.data.filter((u) => u.role === "zamestnanec");
     }
   } catch {
     error.value = "Nepodarilo sa načítať záznam.";

@@ -1,17 +1,45 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onBeforeUnmount } from "vue";
 import api from "../../api/index.js";
 
-const router = useRouter();
 const form = ref({ title: "", location: "", description: "", severity: "Stredná", occurred_at: "" });
 const errors = ref({});
 const loading = ref(false);
 const error = ref("");
+const success = ref(false);
 const images = ref([]);
 const imagePreviews = ref([]);
 
 const severities = ["Nízka", "Stredná", "Vysoká", "Kritická"];
+
+const locations = [
+  "V4 - 002 SMART Lab",
+  "V4 - 010 Učebňa spracovania veľkých dát",
+  "V4 - 011 Laboratórium",
+  "V4 - 102 Učebňa inteligentných systémov",
+  "V4 - 103 Vývojové pracovisko pre mechatronické systémy",
+  "V4 - 108 Laboratórium moderných metód riadenia fyzikálnych systémov",
+  "V4 - 109 Laboratórium distribuovaných systémov riadenia",
+  "V4 - 112 Intelligent Health Lab",
+  "V4 - 113 Laboratórium",
+  "V4 - 114 Smart Industry - Industry 4.0",
+  "V4 - 116 Laboratórium umelej inteligencie",
+  "V4 - 119 Seminárna miestnosť",
+  "V4 - 136 Vedúca oddelenia spoločenských vied",
+  "V4 - 145 Laboratórium výrobných liniek a rozpoznávania obrazov",
+  "V4 - 146 Laboratórium počítačových riadiacich systémov",
+  "V4 - 147 Učebňa dátovej analytiky",
+  "V4 - 156 Kancelária (doktorandi)",
+  "V4 - 157 Sekretariát",
+  "V4 - 158 Kancelária vedúceho katedry",
+  "V4 - 160 Hospodárka",
+  "V4 - 187 Laboratórium strojového učenia",
+  "V4 - 188 LIMAD",
+  "V4 - 102-147 Chodba 1",
+  "V4 - 156-188 Chodba 2",
+  "V4 - X-Y Chodba 3",
+  "Iné",
+];
 
 function handleImages(e) {
   const files = Array.from(e.target.files);
@@ -28,6 +56,7 @@ function validate() {
   errors.value = {};
   if (!form.value.title.trim()) errors.value.title = "Povinný údaj";
   if (!form.value.occurred_at) errors.value.occurred_at = "Povinný údaj";
+  if (!form.value.location) errors.value.location = "Povinný údaj";
   return Object.keys(errors.value).length === 0;
 }
 
@@ -45,7 +74,12 @@ async function handleSubmit() {
     images.value.forEach((file) => formData.append("images", file));
 
     await api.post("/api/reports", formData);
-    router.push("/user/reports");
+    form.value = { title: "", location: "", description: "", severity: "Stredná", occurred_at: "" };
+    images.value = [];
+    imagePreviews.value = [];
+    errors.value = {};
+    success.value = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (e) {
     error.value = e.response?.data?.error || "Niečo sa pokazilo.";
   } finally {
@@ -57,6 +91,16 @@ async function handleSubmit() {
 <template>
   <div class="max-w-2xl">
     <h1 class="text-xl font-semibold text-gray-800 mb-6">Pridať záznam o incidente</h1>
+
+    <div v-if="success" class="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-6">
+      <div class="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <p class="text-sm text-green-700 font-medium">Incident bol úspešne odoslaný.</p>
+      <button type="button" @click="success = false" class="ml-auto text-green-500 hover:text-green-700 text-lg leading-none">&times;</button>
+    </div>
 
     <form @submit.prevent="handleSubmit" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
       <div>
@@ -71,13 +115,15 @@ async function handleSubmit() {
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Poloha</label>
-        <input
+        <label class="block text-sm font-medium text-gray-700 mb-1">Poloha <span class="text-red-500">*</span></label>
+        <select
           v-model="form.location"
-          type="text"
-          placeholder="Kde sa to stalo?"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
-        />
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none bg-white"
+        >
+          <option value="" disabled>Vyberte polohu...</option>
+          <option v-for="loc in locations" :key="loc" :value="loc">{{ loc }}</option>
+        </select>
+        <p v-if="errors.location" class="text-xs text-red-500 mt-1">{{ errors.location }}</p>
       </div>
 
       <div>

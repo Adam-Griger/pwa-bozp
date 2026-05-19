@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuth } from "../composables/useAuth.js";
 
-import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
 import ContactView from "../views/ContactView.vue";
 import LoginView from "../views/LoginView.vue";
 
@@ -15,6 +13,9 @@ import AdminHomeView from "../views/admin/AdminHomeView.vue";
 import AdminCoursesView from "../views/admin/CoursesView.vue";
 import AddCourseView from "../views/admin/AddCourseView.vue";
 import EditCourseView from "../views/admin/EditCourseView.vue";
+import AdminResourcesView from "../views/admin/ResourcesView.vue";
+import AddResourceView from "../views/admin/AddResourceView.vue";
+import EditResourceView from "../views/admin/EditResourceView.vue";
 
 import UserPanelView from "../views/UserPanelView.vue";
 import UserHomeView from "../views/user/UserHomeView.vue";
@@ -30,12 +31,12 @@ import CoursesView from "../views/user/CoursesView.vue";
 import AssignCourseView from "../views/user/AssignCourseView.vue";
 import MyCoursesView from "../views/user/MyCoursesView.vue";
 import TakeTestView from "../views/user/TakeTestView.vue";
+import ResourcesView from "../views/user/ResourcesView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", name: "home", component: HomeView },
-    { path: "/about", name: "about", component: AboutView },
+    { path: "/", redirect: "/login" },
     { path: "/contact", name: "contact", component: ContactView },
     { path: "/login", name: "login", component: LoginView },
     {
@@ -52,6 +53,9 @@ const router = createRouter({
         { path: "elearning", component: AdminCoursesView },
         { path: "elearning/add", component: AddCourseView },
         { path: "elearning/edit/:id", component: EditCourseView },
+        { path: "resources", component: AdminResourcesView },
+        { path: "resources/add", component: AddResourceView },
+        { path: "resources/edit/:id", component: EditResourceView },
       ],
     },
     {
@@ -62,16 +66,17 @@ const router = createRouter({
       children: [
         { path: "", component: UserHomeView },
         { path: "company", component: MyCompanyView },
-        { path: "employees", component: EmployeesView },
-        { path: "employees/new", component: NewEmployeeView },
-        { path: "reports", component: ReportsView },
+        { path: "employees", component: EmployeesView, meta: { roles: ["manažér"] } },
+        { path: "employees/new", component: NewEmployeeView, meta: { roles: ["manažér"] } },
+        { path: "reports", component: ReportsView, meta: { roles: ["manažér"] } },
         { path: "reports/new", component: NewReportView },
-        { path: "reports/my", component: MyReportsView },
-        { path: "reports/:id", component: ReportView },
-        { path: "elearning", component: CoursesView },
-        { path: "elearning/assign", component: AssignCourseView },
-        { path: "elearning/my", component: MyCoursesView },
-        { path: "elearning/take/:id", component: TakeTestView },
+        { path: "reports/my", component: MyReportsView, meta: { roles: ["zamestnanec"] } },
+        { path: "reports/:id", component: ReportView, meta: { roles: ["manažér", "zamestnanec"] } },
+        { path: "elearning", component: CoursesView, meta: { roles: ["manažér"] } },
+        { path: "elearning/assign", component: AssignCourseView, meta: { roles: ["manažér"] } },
+        { path: "elearning/my", component: MyCoursesView, meta: { roles: ["zamestnanec", "študent"] } },
+        { path: "elearning/take/:id", component: TakeTestView, meta: { roles: ["zamestnanec", "študent"] } },
+        { path: "elearning/resources", component: ResourcesView },
         { path: "profile", component: ProfileView },
       ],
     },
@@ -85,11 +90,15 @@ router.beforeEach((to, from, next) => {
     return next("/login");
   }
 
-  if (to.meta.role) {
-    const { getRole } = useAuth();
-    if (getRole() !== to.meta.role) {
-      return next("/user");
-    }
+  const { getRole } = useAuth();
+  const role = getRole();
+
+  if (to.meta.role && role !== to.meta.role) {
+    return next("/user");
+  }
+
+  if (to.meta.roles && !to.meta.roles.includes(role)) {
+    return next("/user");
   }
 
   next();

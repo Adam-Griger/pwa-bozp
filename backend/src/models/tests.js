@@ -5,10 +5,10 @@ export async function getAllTests() {
   return result.rows;
 }
 
-export async function insertTest(client, name, description) {
+export async function insertTest(client, name, description, targetGroup) {
   const result = await client.query(
-    "INSERT INTO tests (name, description) VALUES ($1, $2) RETURNING *",
-    [name, description],
+    "INSERT INTO tests (name, description, target_group) VALUES ($1, $2, $3) RETURNING *",
+    [name, description, targetGroup],
   );
   return result.rows[0];
 }
@@ -49,10 +49,10 @@ export async function getTestById(id) {
   return { ...test.rows[0], questions: questions.rows };
 }
 
-export async function updateTestInfo(client, id, name, description) {
+export async function updateTestInfo(client, id, name, description, targetGroup) {
   await client.query(
-    "UPDATE tests SET name = $1, description = $2 WHERE id = $3",
-    [name, description, id],
+    "UPDATE tests SET name = $1, description = $2, target_group = $3 WHERE id = $4",
+    [name, description, targetGroup, id],
   );
 }
 
@@ -82,6 +82,7 @@ export async function getAssignedTestsForCompany(companyId) {
     `SELECT at.id, at.status, at.deadline, at.assigned_at, at.score, at.max_score,
             t.name, t.description,
             emp.full_name AS employee_name,
+            emp.role AS employee_role,
             mgr.full_name AS assigned_by_name
      FROM assigned_tests at
      JOIN tests t ON t.id = at.test_id

@@ -16,13 +16,22 @@ const columns = [
   { key: "severity", label: "Závažnosť" },
   { key: "status", label: "Stav" },
   { key: "assigned_to_name", label: "Zodpovedný zamestnanec" },
+  { key: "reported_by_name", label: "Nahlásil" },
   { key: "occurred", label: "Dátum" },
 ];
+
+const statusOrder = { Vytvorený: 0, Priradený: 1, Vyriešený: 2 };
 
 onMounted(async () => {
   try {
     const { data } = await api.get("/api/reports");
-    reports.value = data.map((r) => ({ ...r, occurred: formatDate(r.occurred_at) }));
+    reports.value = data
+      .map((r) => ({ ...r, occurred: formatDate(r.occurred_at) }))
+      .sort((a, b) => {
+        const statusDiff = (statusOrder[a.status] ?? 0) - (statusOrder[b.status] ?? 0);
+        if (statusDiff !== 0) return statusDiff;
+        return new Date(b.occurred_at) - new Date(a.occurred_at);
+      });
   } catch {
     error.value = "Nepodarilo sa načítať záznamy.";
   } finally {

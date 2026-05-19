@@ -12,13 +12,18 @@ const loading = ref(true);
 const columns = [
   { key: "name", label: "Názov testu" },
   { key: "description", label: "Popis" },
+  { key: "target_group_label", label: "Určený pre" },
   { key: "created", label: "Dátum vytvorenia" },
 ];
 
 async function fetchCourses() {
   loading.value = true;
   const { data } = await api.get("/api/tests");
-  courses.value = data.map((c) => ({ ...c, created: formatDate(c.created_at) }));
+  courses.value = data.map((c) => ({
+    ...c,
+    created: formatDate(c.created_at),
+    target_group_label: c.target_group === "student" ? "Študent" : "Zamestnanec",
+  }));
   loading.value = false;
 }
 
