@@ -31,7 +31,8 @@ async function handleSubmit() {
   loading.value = true;
   try {
     const { data } = await api.post("/api/companies", {
-      company: company.value, manager: withManager.value ? manager.value : null,
+      company: company.value,
+      manager: withManager.value ? manager.value : null,
     });
     result.value = data;
   } catch (e) {
@@ -94,7 +95,7 @@ function reset() {
           <input
             v-model="company.name"
             type="text"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
             placeholder="Bozp s.r.o."
           />
           <p v-if="errors.name" class="text-xs text-red-500 mt-1">{{ errors.name }}</p>
@@ -104,7 +105,7 @@ function reset() {
           <input
             v-model="company.ico"
             type="text"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
             placeholder="12345678"
           />
           <p v-if="errors.ico" class="text-xs text-red-500 mt-1">{{ errors.ico }}</p>
@@ -114,7 +115,7 @@ function reset() {
           <input
             v-model="company.address"
             type="text"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
             placeholder="Hlavná 17, Košice"
           />
           <p v-if="errors.address" class="text-xs text-red-500 mt-1">{{ errors.address }}</p>
@@ -131,7 +132,7 @@ function reset() {
           type="button"
           @click="withManager = !withManager"
           :class="withManager ? 'bg-gray-800' : 'bg-gray-200'"
-          class="relative w-11 h-6 rounded-full transition-colors duration-200 flex-shrink-0 flex items-center"
+          class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0 flex items-center"
         >
           <span :class="withManager ? 'ml-6' : 'ml-1'" class="w-4 h-4 bg-white rounded-full shadow transition-all duration-200" />
         </button>
@@ -144,7 +145,7 @@ function reset() {
           <input
             v-model="manager.fullname"
             type="text"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
             placeholder="Ján Novák"
           />
           <p v-if="errors.fullname" class="text-xs text-red-500 mt-1">{{ errors.fullname }}</p>
@@ -154,7 +155,7 @@ function reset() {
           <input
             v-model="manager.email"
             type="email"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
             placeholder="jan.novak@bozp.sk"
           />
           <p v-if="errors.email" class="text-xs text-red-500 mt-1">{{ errors.email }}</p>

@@ -50,7 +50,7 @@ onMounted(fetchResources);
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-semibold text-gray-800">Výukové materiály</h1>
+      <h1 class="text-xl font-semibold text-gray-800">Učebné materiály</h1>
       <button @click="router.push('/admin/resources/add')" class="px-4 py-2 bg-gray-800 text-white text-sm rounded hover:bg-gray-700">
         + Pridať materiál
       </button>

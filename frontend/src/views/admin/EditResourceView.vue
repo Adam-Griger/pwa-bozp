@@ -79,14 +79,17 @@ onMounted(async () => {
         <input
           v-model="form.title"
           type="text"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
         />
         <p v-if="errors.title" class="text-xs text-red-500 mt-1">{{ errors.title }}</p>
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Typ <span class="text-red-500">*</span></label>
-        <select v-model="form.type" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none bg-white">
+        <select
+          v-model="form.type"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none bg-white"
+        >
           <option value="legislation">Legislatíva a zákony</option>
           <option value="regulation">Nariadenia a predpisy</option>
           <option value="video">Inštruktážne video</option>
@@ -100,7 +103,7 @@ onMounted(async () => {
         <input
           v-model="form.url"
           type="url"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
         />
         <p v-if="errors.url" class="text-xs text-red-500 mt-1">{{ errors.url }}</p>
       </div>
@@ -110,7 +113,7 @@ onMounted(async () => {
         <textarea
           v-model="form.description"
           rows="3"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none"
         />
       </div>
 
@@ -120,7 +123,11 @@ onMounted(async () => {
         <button type="button" @click="router.push('/admin/resources')" class="px-4 py-2 border border-gray-300 text-sm rounded-lg hover:bg-gray-50">
           Zrušiť
         </button>
-        <button type="submit" :disabled="loading" class="flex-1 py-2.5 bg-gray-800 text-white text-sm font-medium rounded-lg hover:bg-gray-700 disabled:opacity-50">
+        <button
+          type="submit"
+          :disabled="loading"
+          class="flex-1 py-2.5 bg-gray-800 text-white text-sm font-medium rounded-lg hover:bg-gray-700 disabled:opacity-50"
+        >
           {{ loading ? "Ukladám..." : "Uložiť zmeny" }}
         </button>
       </div>

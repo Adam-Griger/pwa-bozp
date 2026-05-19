@@ -101,7 +101,7 @@ function reset() {
           v-model="form.fullname"
           type="text"
           placeholder="Ján Novák"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
         />
         <p v-if="errors.fullname" class="text-xs text-red-500 mt-1">{{ errors.fullname }}</p>
       </div>
@@ -113,7 +113,7 @@ function reset() {
           v-model="form.email"
           type="email"
           placeholder="jan.novak@bozp.sk"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
         />
         <p v-if="errors.email" class="text-xs text-red-500 mt-1">{{ errors.email }}</p>
       </div>
@@ -139,7 +139,7 @@ function reset() {
         <label class="block text-sm font-medium text-gray-700 mb-1">Spoločnosť <span class="text-red-500">*</span></label>
         <select
           v-model="form.companyId"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none bg-white"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none bg-white"
         >
           <option value="" disabled>Vyberte spoločnosť</option>
           <option v-for="c in companies" :key="c.id" :value="c.id">{{ c.company_name }}</option>

@@ -121,7 +121,7 @@ async function handleSubmit() {
             v-model="form.name"
             type="text"
             placeholder="BOZP základy"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
           />
           <p v-if="errors.name" class="text-xs text-red-500 mt-1">{{ errors.name }}</p>
         </div>
@@ -131,7 +131,7 @@ async function handleSubmit() {
             v-model="form.description"
             rows="3"
             placeholder="Krátky popis testu..."
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none"
           />
           <p v-if="errors.description" class="text-xs text-red-500 mt-1">{{ errors.description }}</p>
         </div>
@@ -171,7 +171,7 @@ async function handleSubmit() {
             v-model="q.question_text"
             type="text"
             placeholder="Čo znamená BOZP?"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
           />
           <p v-if="errors[`q_${qi}`]" class="text-xs text-red-500 mt-1">{{ errors[`q_${qi}`] }}</p>
         </div>
@@ -192,7 +192,7 @@ async function handleSubmit() {
               v-model="a.answer_text"
               type="text"
               :placeholder="`Možnosť ${ai + 1}`"
-              class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+              class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-gray-400 focus:outline-none"
             />
             <p v-if="errors[`q_${qi}_a_${ai}`]" class="text-xs text-red-500">{{ errors[`q_${qi}_a_${ai}`] }}</p>
           </div>
