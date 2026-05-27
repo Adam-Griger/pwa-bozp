@@ -12,9 +12,10 @@ defineEmits(["delete", "edit"]);
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow overflow-hidden">
+  <div class="bg-white rounded-lg shadow overflow-hidden w-full">
     <div v-if="loading" class="p-8 text-center text-gray-400">Načítavam...</div>
-    <table v-else class="min-w-full divide-y divide-gray-200">
+    <div v-else class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th v-for="col in columns" :key="col.key" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -38,5 +39,6 @@ defineEmits(["delete", "edit"]);
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </template>

@@ -40,6 +40,6 @@ onMounted(fetchCompanies);
         + Pridať spoločnosť
       </button>
     </div>
-    <DataTable :columns="columns" :rows="companies" :loading="loading" @delete="handleDelete" />
+    <DataTable :columns="columns" :rows="companies" :loading="loading" @delete="handleDelete" :show-edit="false" />
   </div>
 </template>

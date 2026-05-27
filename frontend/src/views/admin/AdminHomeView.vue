@@ -130,7 +130,7 @@ const greeting = computed(() => {
         </div>
         <div>
           <p class="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">Pridať používateľa</p>
-          <p class="text-xs text-gray-500 mt-0.5">Vytvorenie nového účtu</p>
+          <p class="text-xs text-gray-500 mt-0.5">Vytvorenie nového používateľského účtu</p>
         </div>
       </router-link>
 
@@ -144,7 +144,7 @@ const greeting = computed(() => {
           </svg>
         </div>
         <div>
-          <p class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Pridať test</p>
+          <p class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Vytvoriť test</p>
           <p class="text-xs text-gray-500 mt-0.5">Vytvorenie nového testu</p>
         </div>
       </router-link>
@@ -160,7 +160,7 @@ const greeting = computed(() => {
         </div>
         <div>
           <p class="font-semibold text-gray-800 group-hover:text-amber-600 transition-colors">Pridať učebný materiál</p>
-          <p class="text-xs text-gray-500 mt-0.5">Pridanie odkazu na legislatívu, predpis alebo video</p>
+          <p class="text-xs text-gray-500 mt-0.5">Pridanie učebného materiálu</p>
         </div>
       </router-link>
     </div>

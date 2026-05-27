@@ -43,6 +43,6 @@ onMounted(fetchAccounts);
       </button>
     </div>
 
-    <DataTable :columns="columns" :rows="accounts" :loading="loading" @delete="handleDelete" />
+    <DataTable :columns="columns" :rows="accounts" :loading="loading" @delete="handleDelete" :show-edit="false" />
   </div>
 </template>

@@ -121,12 +121,12 @@ function reset() {
       <!-- Role selector -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-3">Rola <span class="text-red-500">*</span></label>
-        <div class="flex gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <label
             v-for="option in ['admin', 'manažér', 'zamestnanec', 'študent']"
             :key="option"
             :class="form.role === option ? 'border-gray-800 bg-gray-800 text-white' : 'border-gray-300 text-gray-600 hover:border-gray-400'"
-            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors capitalize"
+            class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors capitalize"
           >
             <input type="radio" v-model="form.role" :value="option" class="hidden" />
             {{ option }}

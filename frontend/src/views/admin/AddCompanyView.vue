@@ -18,6 +18,7 @@ function validate() {
   errors.value = {};
   if (!company.value.name.trim()) errors.value.name = "Povinný údaj";
   if (!company.value.ico.trim()) errors.value.ico = "Povinný údaj";
+  if (!company.value.address.trim()) errors.value.address = "Povinný údaj";
   if (withManager.value) {
     if (!manager.value.fullname.trim()) errors.value.fullname = "Povinný údaj";
     if (!manager.value.email.trim()) errors.value.email = "Povinný údaj";
@@ -111,7 +112,7 @@ function reset() {
           <p v-if="errors.ico" class="text-xs text-red-500 mt-1">{{ errors.ico }}</p>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Adresa</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Adresa <span class="text-red-500">*</span></label>
           <input
             v-model="company.address"
             type="text"

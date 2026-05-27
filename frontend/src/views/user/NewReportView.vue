@@ -37,7 +37,6 @@ const locations = [
   "V4 - 188 LIMAD",
   "V4 - 102-147 Chodba 1",
   "V4 - 156-188 Chodba 2",
-  "V4 - X-Y Chodba 3",
   "Iné",
 ];
 
@@ -138,7 +137,7 @@ async function handleSubmit() {
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-3">Závažnosť</label>
-        <div class="flex gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <label
             v-for="s in severities"
             :key="s"
@@ -149,7 +148,7 @@ async function handleSubmit() {
               'border-green-600 bg-green-600 text-white': form.severity === s && s === 'Nízka',
               'border-gray-300 text-gray-600 hover:border-gray-400': form.severity !== s,
             }"
-            class="flex-1 flex items-center justify-center px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors"
+            class="flex items-center justify-center px-4 py-2.5 rounded-lg border cursor-pointer text-sm font-medium transition-colors"
           >
             <input type="radio" v-model="form.severity" :value="s" class="hidden" />
             {{ s }}

@@ -35,7 +35,6 @@ const greeting = computed(() => {
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <!-- Spoločnosť — hidden for students -->
       <router-link
         to="/user/company"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
@@ -52,7 +51,7 @@ const greeting = computed(() => {
         </div>
         <div>
           <p class="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">Moja spoločnosť</p>
-          <p class="text-xs text-gray-500 mt-0.5">Informácie o vašej spoločnosti</p>
+          <p class="text-xs text-gray-500 mt-0.5">Informácie o spoločnosti</p>
         </div>
       </router-link>
 
@@ -73,51 +72,14 @@ const greeting = computed(() => {
           </svg>
         </div>
         <div>
-          <p class="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">Všetci zamestnanci</p>
+          <p class="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">Používatelia</p>
           <p class="text-xs text-gray-500 mt-0.5">Prehľad všetkých zamestnancov a študentov</p>
         </div>
       </router-link>
 
       <router-link
         v-if="isManager"
-        to="/user/employees/new"
-        class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
-      >
-        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </div>
-        <div>
-          <p class="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">Pridať zamestnanca</p>
-          <p class="text-xs text-gray-500 mt-0.5">Vytvorenie nového účtu zamestnanca alebo študenta</p>
-        </div>
-      </router-link>
-
-      <!-- Incidenty — managers see all, others see new + my -->
-      <router-link
-        v-if="isManager"
         to="/user/reports"
-        class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
-      >
-        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-            />
-          </svg>
-        </div>
-        <div>
-          <p class="font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">Všetky incidenty</p>
-          <p class="text-xs text-gray-500 mt-0.5">Prehľad všetkých nahlásených incidentov</p>
-        </div>
-      </router-link>
-
-      <router-link
-        to="/user/reports/new"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
         <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
@@ -131,8 +93,8 @@ const greeting = computed(() => {
           </svg>
         </div>
         <div>
-          <p class="font-semibold text-gray-800 group-hover:text-red-600 transition-colors">Nahlásiť incident</p>
-          <p class="text-xs text-gray-500 mt-0.5">Vytvorenie nového záznamu o incidente</p>
+          <p class="font-semibold text-gray-800 group-hover:text-red-600 transition-colors">Incidenty</p>
+          <p class="text-xs text-gray-500 mt-0.5">Prehľad všetkých nahlásených incidentov</p>
         </div>
       </router-link>
 
@@ -141,8 +103,8 @@ const greeting = computed(() => {
         to="/user/reports/my"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
       >
-        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -152,12 +114,11 @@ const greeting = computed(() => {
           </svg>
         </div>
         <div>
-          <p class="font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">Moje incidenty</p>
-          <p class="text-xs text-gray-500 mt-0.5">Incidenty priradené na riešenie vám</p>
+          <p class="font-semibold text-gray-800 group-hover:text-red-600 transition-colors">Moje incidenty</p>
+          <p class="text-xs text-gray-500 mt-0.5">Moje priradené incidenty</p>
         </div>
       </router-link>
 
-      <!-- e-Learning — managers see all + assign, others see my tests -->
       <router-link
         v-if="isManager"
         to="/user/elearning"
@@ -174,24 +135,8 @@ const greeting = computed(() => {
           </svg>
         </div>
         <div>
-          <p class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Všetky testy</p>
+          <p class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Priradené testy</p>
           <p class="text-xs text-gray-500 mt-0.5">Správa priradených e-learningových testov</p>
-        </div>
-      </router-link>
-
-      <router-link
-        v-if="isManager"
-        to="/user/elearning/assign"
-        class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
-      >
-        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </div>
-        <div>
-          <p class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Priradiť test</p>
-          <p class="text-xs text-gray-500 mt-0.5">Priradenie testu zamestnancovi alebo študentovi</p>
         </div>
       </router-link>
 
@@ -216,7 +161,6 @@ const greeting = computed(() => {
         </div>
       </router-link>
 
-      <!-- Učebné materiály — all roles -->
       <router-link
         to="/user/elearning/resources"
         class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
@@ -233,7 +177,54 @@ const greeting = computed(() => {
         </div>
         <div>
           <p class="font-semibold text-gray-800 group-hover:text-amber-600 transition-colors">Učebné materiály</p>
-          <p class="text-xs text-gray-500 mt-0.5">Legislatíva, predpisy a inštruktážne videá</p>
+          <p class="text-xs text-gray-500 mt-0.5">Odkazy na legislatívu, nariadenia a videá</p>
+        </div>
+      </router-link>
+
+      <router-link
+        v-if="isManager"
+        to="/user/employees/new"
+        class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
+      >
+        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">Pridať používateľa</p>
+          <p class="text-xs text-gray-500 mt-0.5">Vytvorenie nového účtu pre zamestnanca alebo študenta</p>
+        </div>
+      </router-link>
+
+      <router-link
+        to="/user/reports/new"
+        class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
+      >
+        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-semibold text-gray-800 group-hover:text-red-600 transition-colors">Nahlásiť incident</p>
+          <p class="text-xs text-gray-500 mt-0.5">Vytvorenie záznamu o novom incidente</p>
+        </div>
+      </router-link>
+
+      <router-link
+        v-if="isManager"
+        to="/user/elearning/assign"
+        class="bg-white border border-gray-200 rounded-xl p-5 flex items-start gap-4 hover:shadow-md transition-shadow group"
+      >
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Priradiť test</p>
+          <p class="text-xs text-gray-500 mt-0.5">Priradenie testu zamestnancovi alebo študentovi</p>
         </div>
       </router-link>
 
@@ -254,7 +245,7 @@ const greeting = computed(() => {
         </div>
         <div>
           <p class="font-semibold text-gray-800 group-hover:text-gray-600 transition-colors">Môj profil</p>
-          <p class="text-xs text-gray-500 mt-0.5">Nastavenia účtu a zmena hesla</p>
+          <p class="text-xs text-gray-500 mt-0.5">Informácie o účte a zmena hesla</p>
         </div>
       </router-link>
     </div>
