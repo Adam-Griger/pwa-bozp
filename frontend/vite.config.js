@@ -3,7 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import { VitePWA } from "vite-plugin-pwa";
 import tailwindcss from "@tailwindcss/vite";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -14,7 +13,6 @@ export default defineConfig({
         name: "BOZP",
         short_name: "BOZP",
         background_color: "#101828",
-        // background_color: "#ffffff",
         theme_color: "#000000",
         display: "standalone",
         start_url: "/",
