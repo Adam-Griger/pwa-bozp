@@ -38,7 +38,7 @@ function logout() {
           <img src="/images/icon-192.png" alt="BOZP logo" class="w-8 h-8 rounded-md shrink-0" />
           <div>
             <span class="text-lg font-bold tracking-wide">BOZP</span>
-            <span class="block text-xs text-gray-400 mt-0.5">Admin Panel</span>
+            <span class="block text-xs text-gray-400 mt-0.5">Admin</span>
           </div>
         </router-link>
         <!-- Close button — mobile only -->

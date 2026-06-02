@@ -3,6 +3,7 @@ import { requireAuth } from "../middleware/auth.js";
 import bcrypt from "bcrypt";
 import { getAllUsers, getUsersByCompany, getUserMe, updateUserPassword, deleteUser } from "../models/user.js";
 import { createUser } from "../services/user.js";
+import { updateCompanyManager } from "../models/company.js";
 
 const router = Router();
 
@@ -65,6 +66,11 @@ router.post("/", requireAuth, async (req, res) => {
 
   try {
     const result = await createUser(fullname, email, companyId || null, role);
+
+    if (role === "manažér" && companyId) {
+      await updateCompanyManager(companyId, result.user.id);
+    }
+
     res.status(201).json(result);
   } catch (err) {
     if (err.code === "23505") {

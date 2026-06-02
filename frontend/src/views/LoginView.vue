@@ -43,7 +43,9 @@ async function handleSubmit() {
 <template>
   <div class="max-w-md mx-auto">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">Prihlásenie</h1>
-    <p class="text-gray-600 text-sm mb-6">Nemáte účet? Kontaktujte podporu pre vytvorenie nového účtu.</p>
+    <p class="text-gray-600 text-sm mb-6">
+      Nemáte účet? <router-link to="/contact" class="text-blue-600 hover:underline">Kontaktujte podporu</router-link> pre vytvorenie nového účtu.
+    </p>
 
     <form @submit.prevent="handleSubmit" class="space-y-4">
       <div>
@@ -80,11 +82,5 @@ async function handleSubmit() {
         {{ loading ? "Prihlasovanie..." : "Prihlásiť sa" }}
       </button>
     </form>
-
-    <p class="mt-6 text-center text-sm text-gray-500">
-      Nemáte účet?
-      <router-link to="/contact" class="text-blue-600 hover:underline">Kontaktujte podporu</router-link>
-      pre vytvorenie nového účtu.
-    </p>
   </div>
 </template>

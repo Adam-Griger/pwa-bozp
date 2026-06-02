@@ -13,6 +13,7 @@ const columns = [
   { key: "company_name", label: "Názov spoločnosti" },
   { key: "ico", label: "IČO" },
   { key: "address", label: "Adresa" },
+  { key: "manager_name", label: "Manažér" },
   { key: "created", label: "Dátum vytvorenia" },
 ];
 

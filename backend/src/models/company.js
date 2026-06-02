@@ -1,7 +1,13 @@
 import pool from "../db/index.js";
 
 export async function getAllCompanies() {
-  const result = await pool.query("SELECT * FROM companies ORDER BY created_at DESC");
+  const result = await pool.query(
+    `SELECT c.id, c.company_name, c.ico, c.address, c.created_at,
+            m.full_name AS manager_name
+     FROM companies c
+     LEFT JOIN users m ON m.id = c.manager_id
+     ORDER BY c.created_at DESC`,
+  );
   return result.rows;
 }
 
@@ -21,6 +27,10 @@ export async function insertCompany(client, name, address, ico) {
 
 export async function deleteCompany(id) {
   await pool.query("DELETE FROM companies WHERE id = $1", [id]);
+}
+
+export async function updateCompanyManager(companyId, managerId) {
+  await pool.query("UPDATE companies SET manager_id = $1 WHERE id = $2", [managerId, companyId]);
 }
 
 export async function getCompanyByUserId(userId) {
