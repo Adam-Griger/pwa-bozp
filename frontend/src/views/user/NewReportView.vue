@@ -130,7 +130,7 @@ async function handleSubmit() {
         <input
           v-model="form.occurred_at"
           type="datetime-local"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:outline-none appearance-none"
         />
         <p v-if="errors.occurred_at" class="text-xs text-red-500 mt-1">{{ errors.occurred_at }}</p>
       </div>
