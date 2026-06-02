@@ -125,6 +125,7 @@ function logout() {
         </button>
         <img src="/images/icon-192.png" alt="BOZP logo" class="w-7 h-7 rounded-md" />
         <span class="font-bold tracking-wide">BOZP</span>
+        <span class="text-xs text-gray-400">{{ roleLabel }}</span>
       </div>
 
       <!-- overflow-x-hidden here so only content clips, not the sticky bar -->
