@@ -67,29 +67,29 @@ async function handlePasswordChange() {
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
       <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-5">Informácie o účte</h2>
       <div class="space-y-4">
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Meno a priezvisko</span>
-          <span class="text-sm font-medium text-gray-900">{{ profile.full_name || "-" }}</span>
+        <div class="flex justify-between items-start gap-4 py-3 border-b border-gray-100">
+          <span class="text-sm text-gray-500 shrink-0">Meno a priezvisko</span>
+          <span class="text-sm font-medium text-gray-900 text-right break-words min-w-0">{{ profile.full_name || "-" }}</span>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Email</span>
-          <span class="text-sm font-medium text-gray-900">{{ profile.email || "-" }}</span>
+        <div class="flex justify-between items-start gap-4 py-3 border-b border-gray-100">
+          <span class="text-sm text-gray-500 shrink-0">Email</span>
+          <span class="text-sm font-medium text-gray-900 text-right break-words min-w-0">{{ profile.email || "-" }}</span>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">PID</span>
-          <code class="text-sm font-mono text-gray-900">{{ profile.pid || "-" }}</code>
+        <div class="flex justify-between items-start gap-4 py-3 border-b border-gray-100">
+          <span class="text-sm text-gray-500 shrink-0">PID</span>
+          <code class="text-sm font-mono text-gray-900 text-right break-words min-w-0">{{ profile.pid || "-" }}</code>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Rola</span>
-          <span class="text-sm font-medium text-gray-900 capitalize">{{ profile.role || "-" }}</span>
+        <div class="flex justify-between items-start gap-4 py-3 border-b border-gray-100">
+          <span class="text-sm text-gray-500 shrink-0">Rola</span>
+          <span class="text-sm font-medium text-gray-900 capitalize text-right min-w-0">{{ profile.role || "-" }}</span>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-sm text-gray-500">Spoločnosť</span>
-          <span class="text-sm font-medium text-gray-900">{{ profile.company_name || "-" }}</span>
+        <div class="flex justify-between items-start gap-4 py-3 border-b border-gray-100">
+          <span class="text-sm text-gray-500 shrink-0">Spoločnosť</span>
+          <span class="text-sm font-medium text-gray-900 text-right break-words min-w-0">{{ profile.company_name || "-" }}</span>
         </div>
-        <div class="flex justify-between py-3">
-          <span class="text-sm text-gray-500">Členom od</span>
-          <span class="text-sm text-gray-900">{{ profile.created_at || "-" }}</span>
+        <div class="flex justify-between items-start gap-4 py-3">
+          <span class="text-sm text-gray-500 shrink-0">Členom od</span>
+          <span class="text-sm text-gray-900 text-right min-w-0">{{ profile.created_at || "-" }}</span>
         </div>
       </div>
     </div>
