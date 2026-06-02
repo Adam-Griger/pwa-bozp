@@ -181,7 +181,7 @@ async function handleSubmit() {
             />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span class="text-sm text-gray-500">Kliknite pre výber alebo odfotografujte</span>
+          <span class="text-sm text-gray-500 text-center">Kliknite pre výber alebo odfotografujte</span>
           <span class="text-xs text-gray-400 mt-1">Max. 10 fotografií, každá do 10 MB</span>
           <input type="file" accept="image/*" multiple capture="environment" class="hidden" @change="handleImages" />
         </label>

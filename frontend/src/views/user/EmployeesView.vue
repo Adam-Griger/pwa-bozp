@@ -46,9 +46,9 @@ onMounted(fetchEmployees);
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-semibold text-gray-800">Zamestnanci</h1>
+      <h1 class="text-xl font-semibold text-gray-800">Používatelia</h1>
       <button @click="router.push('/user/employees/new')" class="px-4 py-2 bg-gray-800 text-white text-sm rounded hover:bg-gray-700">
-        + Pridať zamestnanca
+        + Pridať používateľa
       </button>
     </div>
     <p v-if="error" class="text-sm text-red-600 mb-4">{{ error }}</p>
