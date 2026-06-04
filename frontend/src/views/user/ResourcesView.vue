@@ -87,9 +87,8 @@ onMounted(async () => {
     <div v-else class="space-y-8">
       <div v-for="group in grouped" :key="group.type">
         <div class="flex items-center gap-2 mb-3">
-          <div :class="[group.config.iconBg, 'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0']" v-html="group.config.icon"></div>
+          <div :class="[group.config.iconBg, 'w-8 h-8 rounded-lg flex items-center justify-center shrink-0']" v-html="group.config.icon"></div>
           <h2 class="text-base font-semibold text-gray-700">{{ group.config.label }}</h2>
-          <span class="ml-auto text-xs text-gray-400">{{ group.items.length }} {{ group.items.length === 1 ? "položka" : group.items.length < 5 ? "položky" : "položiek" }}</span>
         </div>
 
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -103,7 +102,7 @@ onMounted(async () => {
           >
             <div class="flex items-start justify-between gap-2">
               <span class="font-medium text-gray-800 text-sm group-hover:text-blue-700 transition-colors leading-snug">{{ item.title }}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5 group-hover:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 shrink-0 mt-0.5 group-hover:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </div>
