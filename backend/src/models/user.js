@@ -67,7 +67,3 @@ export async function getUserMe(id) {
 export async function updateUserPassword(id, hashedPassword) {
   await pool.query("UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, id]);
 }
-
-export async function deleteUser(id) {
-  await pool.query("DELETE FROM users WHERE id = $1", [id]);
-}
