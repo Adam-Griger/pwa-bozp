@@ -14,7 +14,6 @@ const courses = ref([]);
 const loading = ref(true);
 const error = ref("");
 
-// Edit modal state
 const editingId = ref(null);
 const editDeadline = ref("");
 const saving = ref(false);
@@ -105,7 +104,6 @@ onMounted(fetchCourses);
 
     <DataTable :columns="columns" :rows="courses" :loading="loading" @edit="openEdit" @delete="handleDelete" />
 
-    <!-- Edit deadline modal -->
     <div v-if="editingId" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm space-y-5">
         <h2 class="text-base font-semibold text-gray-800">Zmeniť deadline</h2>

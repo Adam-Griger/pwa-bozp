@@ -43,12 +43,12 @@ function setCorrect(qIndex, aIndex) {
 
 function validate() {
   errors.value = {};
-  if (!form.value.name.trim()) errors.value.name = "Required";
-  if (!form.value.description.trim()) errors.value.description = "Required";
+  if (!form.value.name.trim()) errors.value.name = "Povinné";
+  if (!form.value.description.trim()) errors.value.description = "Povinné";
   questions.value.forEach((q, qi) => {
-    if (!q.question_text.trim()) errors.value[`q_${qi}`] = "Required";
+    if (!q.question_text.trim()) errors.value[`q_${qi}`] = "Povinné";
     q.answers.forEach((a, ai) => {
-      if (!a.answer_text.trim()) errors.value[`q_${qi}_a_${ai}`] = "Required";
+      if (!a.answer_text.trim()) errors.value[`q_${qi}_a_${ai}`] = "Povinné";
     });
   });
   return Object.keys(errors.value).length === 0;
@@ -67,7 +67,7 @@ async function handleSubmit() {
     });
     success.value = true;
   } catch (e) {
-    error.value = e.response?.data?.error || "Something went wrong.";
+    error.value = e.response?.data?.error || "Nastala chyba.";
   } finally {
     saving.value = false;
   }
@@ -82,7 +82,7 @@ onMounted(async () => {
       answers: q.answers.map((a) => ({ answer_text: a.answer_text, is_correct: a.is_correct })),
     }));
   } catch {
-    error.value = "Failed to load test.";
+    error.value = "Nepodarilo sa načítať test.";
   } finally {
     loading.value = false;
   }

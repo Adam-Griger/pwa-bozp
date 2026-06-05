@@ -56,7 +56,6 @@ function reset() {
   <div class="max-w-2xl">
     <h1 class="text-xl font-semibold text-gray-800 mb-6">Pridať spoločnosť</h1>
 
-    <!-- Success result -->
     <div v-if="result" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
@@ -70,7 +69,6 @@ function reset() {
         </div>
       </div>
 
-      <!-- Manager credentials if created -->
       <CredentialsCard
         v-if="result.manager"
         title="Údaje pre manažera"
@@ -87,9 +85,7 @@ function reset() {
       </div>
     </div>
 
-    <!-- Form -->
     <form v-else @submit.prevent="handleSubmit" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
-      <!-- Company fields -->
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Názov spoločnosti <span class="text-red-500">*</span></label>
@@ -123,7 +119,6 @@ function reset() {
         </div>
       </div>
 
-      <!-- Toggle -->
       <div class="flex items-center justify-between py-4 border-t border-gray-100">
         <div>
           <p class="text-sm font-medium text-gray-700">Vytvoriť účet pre manažera</p>
@@ -139,7 +134,6 @@ function reset() {
         </button>
       </div>
 
-      <!-- Manager fields (animated open/close) -->
       <div v-if="withManager" class="space-y-4 pt-2">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Meno a priezvisko <span class="text-red-500">*</span></label>

@@ -3,6 +3,7 @@ import "dotenv/config";
 
 const { Pool } = pg;
 
+// for local development
 // const pool = new Pool({
 //   host: process.env.DB_HOST,
 //   port: process.env.DB_PORT,
@@ -11,11 +12,10 @@ const { Pool } = pg;
 //   password: process.env.DB_PASSWORD,
 // });
 
+// for production
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: { rejectUnauthorized: false },
 });
 
 export default pool;

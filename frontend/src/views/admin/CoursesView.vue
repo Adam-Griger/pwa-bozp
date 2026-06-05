@@ -32,7 +32,7 @@ function handleEdit(id) {
 }
 
 async function handleDelete(id) {
-  if (!confirm("Delete this course?")) return;
+  if (!confirm("Odstrániť tento test?")) return;
   await api.delete(`/api/tests/${id}`);
   await fetchCourses();
 }
@@ -44,7 +44,7 @@ onMounted(fetchCourses);
   <div>
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-xl font-semibold text-gray-800">Testy</h1>
-      <button @click="router.push('/admin/courses/add')" class="px-4 py-2 bg-gray-800 text-white text-sm rounded hover:bg-gray-700">
+      <button @click="router.push('/admin/elearning/add')" class="px-4 py-2 bg-gray-800 text-white text-sm rounded hover:bg-gray-700">
         + Pridať test
       </button>
     </div>

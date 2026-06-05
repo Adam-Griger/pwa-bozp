@@ -54,7 +54,6 @@ onMounted(async () => {
       :rows="reports"
       :loading="loading"
       @edit="(id) => router.push(`/user/reports/${id}`)"
-      @delete="() => {}"
       :edit-label="'Detail'"
       :show-delete="false"
     />

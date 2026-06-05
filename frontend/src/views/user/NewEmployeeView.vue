@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import api from "../../api/index.js";
 import CredentialsCard from "../../components/CredentialsCard.vue";
-import { useAuth } from "../../composables/useAuth";
+import { useAuth } from "../../composables/useAuth.js";
 
 const { getCompanyId } = useAuth();
 const router = useRouter();
@@ -51,7 +51,6 @@ function reset() {
   <div class="max-w-2xl">
     <h1 class="text-xl font-semibold text-gray-800 mb-6">Pridať používateľa</h1>
 
-    <!-- Success -->
     <div v-if="result" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
@@ -75,9 +74,7 @@ function reset() {
       </div>
     </div>
 
-    <!-- Form -->
     <form v-else @submit.prevent="handleSubmit" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
-      <!-- Role toggle -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-3">Rola <span class="text-red-500">*</span></label>
         <div class="flex gap-3">

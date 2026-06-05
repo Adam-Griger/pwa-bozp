@@ -37,4 +37,3 @@ const isUserRoute = computed(() => route.path.startsWith("/user"));
   </div>
 </template>
 
-<style scoped></style>

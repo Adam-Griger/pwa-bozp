@@ -25,7 +25,7 @@ async function fetchCompanies() {
 }
 
 async function handleDelete(id) {
-  if (!confirm("Delete this company?")) return;
+  if (!confirm("Odstrániť túto spoločnosť?")) return;
   await api.delete(`/api/companies/${id}`);
   await fetchCompanies();
 }

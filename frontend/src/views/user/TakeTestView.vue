@@ -12,10 +12,9 @@ const loading = ref(true);
 const error = ref("");
 const submitting = ref(false);
 
-// { [questionId]: answerId }
 const selectedAnswers = ref({});
 
-const result = ref(null); // { score, maxScore } after submit
+const result = ref(null);
 
 const allAnswered = computed(() => {
   if (!test.value) return false;

@@ -2,14 +2,17 @@ import pool from "../db/index.js";
 
 export async function insertUser(fullname, pid, email, hashedPassword, role, companyId) {
   const result = await pool.query(
-    "INSERT INTO users (full_name, pid, email, password,  role, company_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+    "INSERT INTO users (full_name, pid, email, password, role, company_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
     [fullname, pid, email, hashedPassword, role, companyId],
   );
   return result.rows[0];
 }
 
-export async function findUserByEmail(email) {
-  const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+export async function insertUserWithClient(client, fullname, pid, email, hashedPassword, role, companyId) {
+  const result = await client.query(
+    "INSERT INTO users (full_name, pid, email, password, role, company_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, pid, full_name, email, role",
+    [fullname, pid, email, hashedPassword, role, companyId],
+  );
   return result.rows[0];
 }
 
@@ -30,7 +33,7 @@ export async function deleteUser(id) {
 export async function getAllUsers() {
   const result = await pool.query(
     `SELECT u.id, u.pid, u.full_name, u.email, u.role, u.created_at,
-            c.company_name AS company_name
+            c.company_name
      FROM users u
      LEFT JOIN companies c ON u.company_id = c.id
      ORDER BY u.created_at DESC`,
@@ -65,10 +68,6 @@ export async function updateUserPassword(id, hashedPassword) {
   await pool.query("UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, id]);
 }
 
-export async function insertUserWithClient(client, fullname, pid, email, hashedPassword, role, companyId) {
-  const result = await client.query(
-    "INSERT INTO users (full_name, pid, email, password, role, company_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, pid, full_name, email, role",
-    [fullname, pid, email, hashedPassword, role, companyId],
-  );
-  return result.rows[0];
+export async function deleteUser(id) {
+  await pool.query("DELETE FROM users WHERE id = $1", [id]);
 }

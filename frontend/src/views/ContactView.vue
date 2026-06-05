@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Page heading -->
     <div class="text-center mb-6">
       <h1 class="text-4xl font-extrabold text-gray-900 mb-3">Spojte sa s nami</h1>
       <p class="text-gray-500 max-w-lg mx-auto">
@@ -9,7 +8,6 @@
     </div>
 
     <div class="grid lg:grid-cols-3 gap-10">
-      <!-- Contact info sidebar -->
       <aside class="space-y-6">
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <h2 class="font-semibold text-gray-900 mb-5">Kontaktné informácie</h2>
@@ -75,9 +73,7 @@
         </div>
       </aside>
 
-      <!-- Form card -->
       <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-        <!-- Success banner -->
         <div
           v-if="submitted"
           class="flex items-center gap-3 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl text-sm mb-6"
@@ -167,7 +163,6 @@
             />
           </div>
 
-          <!-- Submit -->
           <button
             type="button"
             :disabled="!canSubmit"

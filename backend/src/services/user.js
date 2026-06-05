@@ -14,13 +14,12 @@ function generatePID(fullname, email, role) {
   const hash = crypto.createHash("sha256").update(seed).digest("hex");
   const roleLetter = roleLetters[role];
   const pid = parseInt(hash, 16) % 1000000;
-
   return `${roleLetter}${pid}`;
 }
 
 function generatePassword() {
   // return crypto.randomBytes(6).toString("base64");
-  return "123456"; //for development
+  return "123456"; // for development
 }
 
 async function createUser(fullname, email, companyId, role) {

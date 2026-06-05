@@ -26,7 +26,7 @@ async function fetchAccounts() {
 }
 
 async function handleDelete(id) {
-  if (!confirm("Delete this user?")) return;
+  if (!confirm("Odstrániť tohto používateľa?")) return;
   await api.delete(`/api/users/${id}`);
   await fetchAccounts();
 }

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import pool from "../db/index.js";
-import { insertCompany, insertCompanyOnly } from "../models/company.js";
+import { insertCompany, insertCompanyOnly, updateCompanyManagerWithClient } from "../models/company.js";
 import { insertUserWithClient } from "../models/user.js";
 import { generatePID, generatePassword } from "./user.js";
 
@@ -18,7 +18,7 @@ export async function createCompanyWithManager(companyData, managerData) {
 
     const manager = await insertUserWithClient(client, managerData.fullname, pid, managerData.email, hashed, "manažér", company.id);
 
-    await client.query("UPDATE companies SET manager_id = $1 WHERE id = $2", [manager.id, company.id]);
+    await updateCompanyManagerWithClient(client, company.id, manager.id);
 
     await client.query("COMMIT");
 

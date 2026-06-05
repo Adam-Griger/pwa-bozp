@@ -50,10 +50,7 @@ export async function updateReportAssignee(id, assignedTo) {
 }
 
 export async function setReportDone(id, resolutionNote) {
-  await pool.query(
-    "UPDATE reports SET status = 'Vyriešený', resolution_note = $1, updated_at = NOW() WHERE id = $2",
-    [resolutionNote || null, id],
-  );
+  await pool.query("UPDATE reports SET status = 'Vyriešený', resolution_note = $1, updated_at = NOW() WHERE id = $2", [resolutionNote || null, id]);
 }
 
 export async function getReportsAssignedToUser(userId) {

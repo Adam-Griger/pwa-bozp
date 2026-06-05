@@ -12,7 +12,7 @@ export async function getAllCompanies() {
 }
 
 export async function insertCompanyOnly(name, address, ico) {
-  const result = await pool.query("INSERT INTO companies (company_name, address, ico) VALUES ($1, $2, $3) RETURNING *", [name, address, ico]);
+  const result = await pool.query("INSERT INTO companies (company_name, address, ico) VALUES ($1, $2, $3) RETURNING *", [name, address || null, ico]);
   return result.rows[0];
 }
 
@@ -25,12 +25,16 @@ export async function insertCompany(client, name, address, ico) {
   return result.rows[0];
 }
 
-export async function deleteCompany(id) {
-  await pool.query("DELETE FROM companies WHERE id = $1", [id]);
-}
-
 export async function updateCompanyManager(companyId, managerId) {
   await pool.query("UPDATE companies SET manager_id = $1 WHERE id = $2", [managerId, companyId]);
+}
+
+export async function updateCompanyManagerWithClient(client, companyId, managerId) {
+  await client.query("UPDATE companies SET manager_id = $1 WHERE id = $2", [managerId, companyId]);
+}
+
+export async function deleteCompany(id) {
+  await pool.query("DELETE FROM companies WHERE id = $1", [id]);
 }
 
 export async function getCompanyByUserId(userId) {

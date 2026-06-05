@@ -7,7 +7,7 @@ router.post("/login", async (req, res) => {
   const { pid, password } = req.body;
 
   if (!pid || !password) {
-    return res.status(400).json({ error: "Email and password are required!" });
+    return res.status(400).json({ error: "PID a heslo sú povinné." });
   }
 
   try {

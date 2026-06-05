@@ -5,7 +5,7 @@ import api from "../../api/index.js";
 
 const router = useRouter();
 
-const mode = ref("employee"); // "employee" | "student"
+const mode = ref("employee");
 
 const allTests = ref([]);
 const allUsers = ref([]);

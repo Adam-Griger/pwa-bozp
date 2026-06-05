@@ -16,13 +16,11 @@ const greeting = computed(() => {
 
 <template>
   <div>
-    <!-- Greeting -->
     <div class="mb-8">
       <h1 class="text-2xl font-bold text-gray-800">{{ greeting }}, {{ name }} 👋</h1>
       <p class="text-sm text-gray-500 mt-1">Ste prihlásený ako <span class="font-medium text-gray-700">administrátor</span>.</p>
     </div>
 
-    <!-- Quick links -->
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <router-link
         to="/admin/companies"

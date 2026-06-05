@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  title: { type: String, default: "Credentials — save these now" },
+  title: { type: String, default: "Prihlasovacie údaje - uložte si ich" },
   pid: String,
   plainPassword: String,
 });

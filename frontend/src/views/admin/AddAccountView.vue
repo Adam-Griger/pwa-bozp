@@ -68,7 +68,6 @@ function reset() {
   <div class="max-w-2xl">
     <h1 class="text-xl font-semibold text-gray-800 mb-6">Pridať používateľa</h1>
 
-    <!-- Success -->
     <div v-if="result" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
@@ -92,9 +91,7 @@ function reset() {
       </div>
     </div>
 
-    <!-- Form -->
     <form v-else @submit.prevent="handleSubmit" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
-      <!-- Full name -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Meno a priezvisko <span class="text-red-500">*</span></label>
         <input
@@ -106,7 +103,6 @@ function reset() {
         <p v-if="errors.fullname" class="text-xs text-red-500 mt-1">{{ errors.fullname }}</p>
       </div>
 
-      <!-- Email -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
         <input
@@ -118,7 +114,6 @@ function reset() {
         <p v-if="errors.email" class="text-xs text-red-500 mt-1">{{ errors.email }}</p>
       </div>
 
-      <!-- Role selector -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-3">Rola <span class="text-red-500">*</span></label>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -134,7 +129,6 @@ function reset() {
         </div>
       </div>
 
-      <!-- Company (hidden for admin) -->
       <div v-if="form.role !== 'admin'">
         <label class="block text-sm font-medium text-gray-700 mb-1">Spoločnosť <span class="text-red-500">*</span></label>
         <select
